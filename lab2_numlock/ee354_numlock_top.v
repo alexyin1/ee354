@@ -312,7 +312,7 @@ module ee354_numlock_top (
 	// we want the CATHODES to turn "on-off-on-off" with system clock
 	// while we are in state: OPENING
 	assign SSD_CATHODES_blinking = SSD_CATHODES | ( {7{q_Opening & sys_clk}} );
-	assign {Ca, Cb, Cc, Cd, Ce, Cf, Cg, Dp} = SSD_CATHODES_blinking;
+	assign {Ca, Cb, Cc, Cd, Ce, Cf, Cg, Dp} = {SSD_CATHODES_blinking, 1'b1};
 
 	// Following is Hex-to-SSD conversion. Even though
 	always @ (SSD) 
