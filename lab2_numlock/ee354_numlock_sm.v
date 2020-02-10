@@ -7,7 +7,7 @@
 
 `timescale 1ns / 1ps
 
-module ee201_numlock_sm(Clk, reset, U, Z, q_Bad, q_Opening, q_G1011, q_G1011get, q_G101, q_G101get, q_G10, q_G10get, q_G1, q_G1get, q_I, Unlock);
+module ee354_numlock_sm(Clk, reset, U, Z, q_Bad, q_Opening, q_G1011, q_G1011get, q_G101, q_G101get, q_G10, q_G10get, q_G1, q_G1get, q_I, Unlock);
 
 	/*  INPUTS */
 	// Clock & Reset

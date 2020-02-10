@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Author:			Brandon Franzke, Gandhi Puvvada, Bilal Zafar
 // Create Date:		02/17/2008, 2/6/2012 
-// File Name:		ee201_numlock_top.v [EXERCISE given to studnents]
+// File Name:		ee354_numlock_top.v [EXERCISE given to studnents]
 // Description: 
 //
 //
@@ -12,16 +12,14 @@
 
 `timescale 1ns / 1ps
 
-module ee201_numlock_top (   
+module ee354_numlock_top (   
 		MemOE, MemWR, RamCS, QuadSpiFlashCS, // Disable the three memory chips
 
         ClkPort,                           // the 100 MHz incoming clock signal
 		
         BtnL, BtnR, // Need these for the inputs!
-
-		// BtnL, BtnU, BtnD, BtnR,            // the Left, Up, Down, and the Right buttons 
-		
 		BtnC,                             // the center button (this is our reset in most of our designs)
+
 		Sw7, Sw6, Sw5, Sw4, Sw3, Sw2, Sw1, Sw0, // 8 switches
 
 		Ld7, Ld6, Ld5, Ld4, Ld3, Ld2, Ld1, Ld0, // 8 LEDs
@@ -35,7 +33,7 @@ module ee201_numlock_top (
 	// Clock & Reset I/O
 	input		ClkPort;	
 // TODO: DEFINE THE INPUTS (buttons and switches) you need for this project
-// make sure to add those to the ee201_numlock_top PORT list also!	
+// make sure to add those to the ee354_numlock_top PORT list also!	
 	// Project Specific Inputs
 	input		BtnL, BtnC, BtnR;
 	input 		Sw7, Sw6, Sw5, Sw4, Sw3, Sw2, Sw1, Sw0;	
@@ -135,7 +133,7 @@ module ee201_numlock_top (
 // DESIGN
 
 	
-	ee201_numlock_sm SM1(.Clk(sys_clk), .reset(reset), 
+	ee354_numlock_sm SM1(.Clk(sys_clk), .reset(reset), 
 								.q_I(q_I), 
 								.q_G1get(q_G1get),
 								.q_G1(q_G1),
@@ -149,11 +147,11 @@ module ee201_numlock_top (
 								.q_Opening(q_Opening),
 								.U(U),
 								.Z(Z),
-								.Unlock(Unlock),
-								.Ld7(Ld7),
-								.Ld6(Ld6),
-								.Ld5(Ld5),
-								.Ld4(Ld4)
+								.Unlock(Unlock)
+								// .Ld7(Ld7),
+								// .Ld6(Ld6),
+								// .Ld5(Ld5),
+								// .Ld4(Ld4)
 								);		
 // TODO: finish the port list
 // make sure you are following the naming scheme above
@@ -264,7 +262,7 @@ module ee201_numlock_top (
 	assign SSD3 =    {1'b0, q_Bad, q_Opening, q_G1011};
 	assign SSD2 =	 {q_G1011get, q_G101, q_G101get, q_G10};
 	assign SSD1 =	 {q_G10get, q_G1, q_G1get, q_I};
-	assign SSD0 = state_num;
+	assign SSD0 = 	 state_num;
 	
 	
 	// need a scan clk for the seven segment display 

@@ -2,17 +2,17 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 // Company: 
-// Engineer: EE201L Teaching Team
+// Engineer: ee354L Teaching Team
 //
 // Create Date:   22:26:25 02/06/2012
-// Design Name:   ee201_numlock_sm
-// Module Name:   C:/Xilinx_projects/ee201l_number_lock/ee201l_number_lock_verilog_SOLN/ee201_numlock_sm_tb
-// Project Name:  ee201l_number_lock_verilog_SOLN
+// Design Name:   ee354_numlock_sm
+// Module Name:   C:/Xilinx_projects/ee354l_number_lock/ee354l_number_lock_verilog_SOLN/ee354_numlock_sm_tb
+// Project Name:  ee354l_number_lock_verilog_SOLN
 // Target Device:  
 // Tool versions:  
 // Description: 
 //
-// Verilog Test Fixture created by ISE for module: ee201_numlock_sm
+// Verilog Test Fixture created by ISE for module: ee354_numlock_sm
 //
 // Dependencies:
 // 
@@ -22,7 +22,7 @@
 // 
 ////////////////////////////////////////////////////////////////////////////////
 
-module ee201_numlock_sm_tb;
+module ee354_numlock_sm_tb;
 
 	// Inputs
 	reg Clk;
@@ -45,7 +45,7 @@ module ee201_numlock_sm_tb;
 	wire Unlock;
 
 	// Instantiate the Unit Under Test (UUT)
-	ee201_numlock_sm uut (
+	ee354_numlock_sm uut (
 		.Clk(Clk), 
 		.reset(reset), 
 		.q_I(q_I), 
