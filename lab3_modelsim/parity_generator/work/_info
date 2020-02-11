@@ -1,0 +1,52 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Modeltech_pe_edu_10.4a/examples
+vparity
+Z0 !s110 1581463375
+!i10b 1
+!s100 JJ1Uc:hSahiWh9EdUZU380
+IDJAjD5dWNO33O7Rki:0l20
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+Z2 dC:/Users/Alex Yin/Documents/ee354/lab3_modelsim/parity_generator
+w1581463348
+8parity_for_loop.v
+Fparity_for_loop.v
+L0 10
+Z3 OP;L;10.4a;61
+r1
+!s85 0
+31
+Z4 !s108 1581463375.000000
+!s107 parity_for_loop.v|
+!s90 -reportprogress|300|parity_for_loop.v|
+!s101 -O0
+!i113 1
+Z5 o-L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact -O0
+vparity_tb
+R0
+!i10b 1
+!s100 ;^UMjGUojD2L]hVel:Z_l2
+I8On=<[ZndHcaD93:EXge:2
+R1
+R2
+w1581463063
+8parity_tb.v
+Fparity_tb.v
+L0 11
+R3
+r1
+!s85 0
+31
+R4
+!s107 parity_tb.v|
+!s90 -reportprogress|300|parity_tb.v|
+!s101 -O0
+!i113 1
+R5
