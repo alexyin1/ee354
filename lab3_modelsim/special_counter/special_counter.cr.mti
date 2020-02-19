@@ -1,0 +1,22 @@
+{C:/Users/Alex Yin/Documents/ee354/lab3_modelsim/special_counter/ee201L_sync_counter_mix_of_blocking_and_non_blocking.v} {1 {vlog -work work -stats=none {C:/Users/Alex Yin/Documents/ee354/lab3_modelsim/special_counter/ee201L_sync_counter_mix_of_blocking_and_non_blocking.v}
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module ee201L_sync_counter_with_jump
+
+Top level modules:
+	ee201L_sync_counter_with_jump
+
+} {} {}} {C:/Users/Alex Yin/Documents/ee354/lab3_modelsim/special_counter/ee201L_sync_counter_mix_of_blocking_and_non_blocking_structured_tb.v} {1 {vlog -work work -stats=none {C:/Users/Alex Yin/Documents/ee354/lab3_modelsim/special_counter/ee201L_sync_counter_mix_of_blocking_and_non_blocking_structured_tb.v}
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module ee201L_sync_counter_with_jump_tb
+
+Top level modules:
+	ee201L_sync_counter_with_jump_tb
+
+} {} {}} {C:/Users/Alex Yin/Documents/ee354/lab3_modelsim/special_counter/ee201L_sync_counter_mix_of_blocking_and_non_blocking_tb.v} {1 {vlog -work work -stats=none {C:/Users/Alex Yin/Documents/ee354/lab3_modelsim/special_counter/ee201L_sync_counter_mix_of_blocking_and_non_blocking_tb.v}
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module ee201L_sync_counter_with_jump_tb
+
+Top level modules:
+	ee201L_sync_counter_with_jump_tb
+
+} {} {}}

@@ -1,0 +1,15 @@
+{C:/Users/Alex Yin/Documents/ee354/lab3_modelsim/Hex_to_seven_segment_converter/seven_segment_display.v} {1 {vlog -work work -stats=none {C:/Users/Alex Yin/Documents/ee354/lab3_modelsim/Hex_to_seven_segment_converter/seven_segment_display.v}
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module seven_segment_display
+
+Top level modules:
+	seven_segment_display
+
+} {} {}} {C:/Users/Alex Yin/Documents/ee354/lab3_modelsim/Hex_to_seven_segment_converter/seven_segment_display_tb.v} {1 {vlog -work work -stats=none {C:/Users/Alex Yin/Documents/ee354/lab3_modelsim/Hex_to_seven_segment_converter/seven_segment_display_tb.v}
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module seven_segment_display_tb
+
+Top level modules:
+	seven_segment_display_tb
+
+} {} {}}
