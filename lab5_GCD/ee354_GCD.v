@@ -42,9 +42,9 @@ module ee354_GCD(Clk, SCEN, Reset, Start, Ack, Ain, Bin, A, B, AB_GCD, i_count, 
 		  begin
 			state <= I;
 			i_count <= 8'bx;  	// ****** TODO ******
-			A <= ;		  	// complete the 3 lines
-			B <= ;
-			AB_GCD <= ;			
+			A <= 8'bx;		  	// complete the 3 lines
+			B <= 8'bx;
+			AB_GCD <= 8'bx;			
 		  end
 		else				// ****** TODO ****** complete several parts
 				case(state)	
