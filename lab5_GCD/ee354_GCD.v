@@ -37,7 +37,7 @@ module ee354_GCD(Clk, SCEN, Reset, Start, Ack, Ain, Bin, A, B, AB_GCD, i_count, 
 	
 	// NSL AND SM
 	always @ (posedge Clk, posedge Reset)
-	begin 
+	begin : my_GCD
 		if(Reset) 
 		  begin
 			state <= I;
@@ -53,45 +53,57 @@ module ee354_GCD(Clk, SCEN, Reset, Start, Ack, Ain, Bin, A, B, AB_GCD, i_count, 
 						// state transfers
 						if (Start) state <= SUB;
 						// data transfers
-						i_count <= 0;
+						i_count <= 8'bx;
 						A <= Ain;
 						B <= Bin;
-						AB_GCD <= 0;
+						AB_GCD <= 8'bx;
 					end		
 					SUB: 
 		               if (SCEN) //  This causes single-stepping the SUB state
 						begin		
 							// state transfers
-							if (A == B) state <= (i_count == 0) ?    :   ;
+							if (A == B) state <= (i_count == 0) ?  DONE  : MULT  ;
 							// data transfers
-							if (A == B) AB_GCD <=   ;		
+							if (A == B) AB_GCD <= A  ;		
 							if (A < B)
 							  begin
 								// swap A and B
- 
- 
+ 								A <= B;
+ 								B <= A;
 							  end
 							else						// if (A > B)
 							  begin	
-
-
-
-
-
-
-
-
-
+							  	if (~A[0] & ~B[0]) // both even
+							  		begin
+							  			i_count <= i_count + 1;
+							  			A <= A / 2;
+							  			B <= B / 2;
+							  		end
+							  	else if (A[0] & ~B[0]) // A odd, B even
+							  		begin
+							  			B <= B / 2;
+							  		end
+							  	else if (~A[0] & B[0]) // A even, B odd
+							  		begin
+							  			A <= A / 2;
+							  		end
+							  	else if (A[0] & B[0]) // both odd
+							  		begin
+							  			A <= A - B;
+							  		end
 							  end
 						end
 					MULT:
 					  if (SCEN) // This causes single-stepping the MULT state
 						begin
 							// state transfers
-							
+							if (i_count == 1)
+								begin
+									state <= DONE;
+								end
 							// data transfers
-
-
+							AB_GCD <= AB_GCD * 2;
+							i_count <= i_count - 1;
 						end
 					
 					DONE:
