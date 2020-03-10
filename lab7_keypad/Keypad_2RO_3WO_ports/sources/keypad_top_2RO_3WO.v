@@ -1,0 +1,178 @@
+// Top-level Verilog files for the keypad interface
+// keypad_top_2RO_3WO.v
+// keypad interface using picoblaze
+// Designed by: Shashidhar Aravind Kulkarni <shashidk@usc.edu> and Gandhi Puvvada <gandhi@usc.edu>
+// 10/21/2017
+
+// ======
+// Parts of our solution code is removed and we marked such portions 
+// with a "TODO" for your to complete.
+// Complete the 5 TODO sections to complete this top .v file.
+// ======
+
+
+`timescale 1ns / 1ps
+
+// ==============================================================================================
+// 												Define Module
+// ==============================================================================================
+module PmodKYPD_2RO_3WO(
+    ClkPort,
+	sw,
+    JA,
+    an,
+    seg,
+    dp
+    );
+	 
+	 
+// ==============================================================================================
+// 											Port Declarations
+// ==============================================================================================
+	input ClkPort;				// 100Mhz onboard clock
+	input [3:0]sw;				// Switches on FPGA board
+	inout [7:0] JA;				// Port JA on Nexys4, JA[3:0] is Columns, JA[7:4] is rows
+	output [7:0] an;			// Anodes on seven segment display
+	output [6:0] seg;			// Cathodes on seven segment display
+	output dp;                  // dot point on seven segment display
+
+// ==============================================================================================
+// 							  		Parameters, Regsiters, and Wires
+// ==============================================================================================
+
+// Output wires
+	wire [7:0] an;
+	wire [6:0] seg;
+	
+// Signals used to connect KCPSM6
+
+	wire [11:0] address;
+	wire [17:0]	instruction;
+	wire        bram_enable;
+	     [7:0]  in_port;   		// <== TODO #1 specify the data type as reg or wire. If you are driving it, consider if you are driving it using an assign statement or as LHS of a statement in an always block
+	     [7:0]  out_port;		// <== TODO #1 specify the data type as reg or wire. If you are driven by an instantiated module, it is a wire.
+	wire [7:0]  port_id;
+	wire        write_strobe;
+	wire        k_write_strobe;
+	wire        read_strobe;
+	reg         interrupt;   
+	wire        interrupt_ack;
+	wire        kcpsm6_sleep;  
+	wire        kcpsm6_reset;
+	wire        rdl;	
+//	
+	wire		Reset, ClkPort;
+	wire		board_clk, sys_clk;
+	reg [3:0]	outJA; //output register which is written by picoblaze
+	reg [3:0]   outAnode; //output register which is written by picoblaze
+	reg [6:0]	outseg; //output register which is written by picoblaze
+
+// ==============================================================================================
+// 			Main body comprised of concurrent constructs (component instantiations, concurrent assign statements, always blocks (and any subprograms such as functions and tasks) )
+// ==============================================================================================
+	
+  /////////////////////////////////////////////////////////////////////////////////////////
+  // Instantiate KCPSM6 and connect to program ROM
+  /////////////////////////////////////////////////////////////////////////////////////////
+  //
+  // The generics can be defined as required. In this case the 'hwbuild' value is used to 
+  // define a version using the ASCII code for the desired letter and the interrupt vector
+  // has been set to 3C0 to provide 64 instructions for an Interrupt Service Routine (ISR)
+  // before reaching the end of a 1K memory 
+  //
+
+  
+//Picoblaze processor instantiation
+  kcpsm6 #(
+	.interrupt_vector	(12'h3C0),
+	.scratch_pad_memory_size(64),
+	.hwbuild		(8'h41))            // 41 hex is ASCII Character "A"
+  processor (
+	.address 		(address),
+	.instruction 	(instruction),
+	.bram_enable 	(bram_enable),
+	.port_id 		(port_id),
+	.write_strobe 	(write_strobe),
+	.k_write_strobe (k_write_strobe),
+	.out_port 		(out_port),
+	.read_strobe 	(read_strobe),
+	.in_port 		(in_port),
+	.interrupt 		(interrupt),
+	.interrupt_ack 	(interrupt_ack),
+	.reset 			(kcpsm6_reset),
+	.sleep			(kcpsm6_sleep),
+	.clk 			(board_clk)); 
+	
+	
+	
+//Program memory instantiation	
+prom_kypd_2RO_3WO #(
+	.C_FAMILY		   ("7S"),  
+	.C_RAM_SIZE_KWORDS	(1),  
+	.C_JTAG_LOADER_ENABLE	(1))
+	program_rom (
+	.rdl 			(rdl),
+	.enable 		(bram_enable),
+	.address 		(address),
+	.instruction 	(instruction),
+	.clk 			(board_clk));  
+
+	
+// ClkPort	
+	BUFGP BUFGP1 (board_clk, ClkPort); 	
+	
+
+// Drive columns of the Keypad
+assign JA[0]= outJA[3];
+assign JA[1]= 		  ;   // <== TODO #2 consider which column pin is driven by which output register of which output port (that we added to the picoblaze processor subsystem)
+assign      = outJA[1];   // <== TODO #2
+assign JA[3]= outJA[0];
+
+// Drive anodes and cathodes (segments)
+assign an[3:0] = outAnode;
+assign an[7:4] = 4'b1111;
+assign seg = outseg;
+
+// TODO #3
+// To distinguish the demo bit file (pmodkypd_with_switches.bit) from the bit file generated by this design (keypad_top_2RO_3WO.bit) 
+// we want you to light up the dot point DP along with the 7-segment display for any button pressed on the keypad.
+// So, please tie constant value (either 1'b0 or 1'b1) to the DP below.
+assign dp =     ; // <== TODO #3
+
+
+// TODO #4
+// We use a combinational always block in this top Verilog module to describe 
+// input ports to drive the in-port pins of the picoblaze. 
+// We can use an “if” or a “case” statement (or a combination of them) to do this. 
+ 
+always @ (*)  // <== TODO #4   
+// Use an if statement to describe the 8-bit wide 2-to-1 mux whose output drives the 8-bit in_port of the picoblaze
+// Use Verilog concatenation operator to concatenate zeros on the left. Example: {4'b0000,switches}  
+// Do you want 8 select lines port_id[7:0] or just one select line? if it is one, which one? port_id[3]?
+begin
+													// if port_id is 0 
+													//read row inputs (some JA input pins)
+													//if port_id is 1
+													//read switch inputs (some sw input pins)
+end	
+
+
+// TODO #5
+// Create the three output ports
+// We understand that we need to capture the data coming 
+// to the output ports ( from the out_port[7:0] ) in registers or latches.
+// We use registers here. The registers have a recirculating muxes to retain
+// their values if the picoblaze is not writing to them (i.e. if write_strobe is absent).
+always @(posedge board_clk) 	  // <== TODO #5  complete this always block 
+begin	
+	// 'write_strobe' is used to qualify updating of output ports 
+	if (write_strobe ==      ) 
+	begin
+		case (port_id[     :0])
+		2'b00 : outJA <= out_port[  :0];			//if port_id is 0 drive column outputs
+		      : outAnode <= out_port[  :0]; 		// if port_id is 1 drive Anode
+		      : outseg <=     				;		//if port_id is 2 send SSD value to be displayed
+		endcase
+	end
+end	
+endmodule
