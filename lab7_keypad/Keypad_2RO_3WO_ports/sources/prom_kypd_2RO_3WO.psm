@@ -54,7 +54,7 @@
 		
 		CONSTANT Mask0111,07			; to check if row 0 is low 7 = 0111
 		CONSTANT Mask1011,0B			; to check if row 1 is low B = 1011
-		CONSTANT Mask1101,  			; to check if row 2 is low   <== TODO #1
+		CONSTANT Mask1101,0D  			; to check if row 2 is low   <== TODO #1
 		CONSTANT Mask1110,0E			; to check if row 3 is low E = 1110
 		
 ;**************************************************************************************
@@ -66,7 +66,7 @@
 		CONSTANT Display2,24			; code to display 2 on SSD
 		CONSTANT Display3,30			; code to display 3 on SSD
 		CONSTANT Display4,19			; code to display 4 on SSD
-		CONSTANT Display5,  			; code to display 5 on SSD  <== TODO #2
+		CONSTANT Display5,12  			; code to display 5 on SSD  <== TODO #2
 		CONSTANT Display6,02			; code to display 6 on SSD
 		CONSTANT Display7,78			; code to display 7 on SSD
 		CONSTANT Display8,00			; code to display 8 on SSD
