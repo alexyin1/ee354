@@ -102,6 +102,10 @@ always @ (*)
 begin
 	case (port_id[3:0])
 		// #1 TODO select signal to input port
+		4'b0000 : in_port <=  {7'b0000000, JA[7]};
+		4'b0001 : in_port <=  {7'b0000000, JA[6]};
+		4'b0010 : in_port <=  {7'b0000000, JA[5]};
+		4'b0011 : in_port <=  {7'b0000000, JA[4]};
 		4'b0100 : in_port <=  {4'b0000, sw};
 		default : in_port <= 8'bXXXXXXXX ;  
 	endcase
@@ -114,6 +118,10 @@ begin
 	begin
 		case (port_id[3:0])
 		// #2 TODO connect signal to output port
+		4'b0000 : outJA[3] = out_port[0];
+		4'b0001 : outJA[2] = out_port[0];
+		4'b0010 : outJA[1] = out_port[0];
+		4'b0011 : outJA[0] = out_port[0];
 		4'b0100 : outAnode <= out_port[3:0];
 		4'b0101 : outSeg <= out_port[6:0];
 		endcase

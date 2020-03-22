@@ -1,0 +1,97 @@
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
+| Date         : Sat Mar 21 20:03:55 2020
+| Host         : DESKTOP-BBSH87J running 64-bit major release  (build 9200)
+| Command      : report_control_sets -verbose -file PmodKYPD_5RO_6WO_control_sets_placed.rpt
+| Design       : PmodKYPD_5RO_6WO
+| Device       : xc7a100t
+---------------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Total control sets                                       |    19 |
+|    Minimum number of control sets                        |    19 |
+|    Addition due to synthesis replication                 |     0 |
+|    Addition due to physical synthesis replication        |     0 |
+| Unused register locations in slices containing registers |    74 |
++----------------------------------------------------------+-------+
+* Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
+** Run report_qor_suggestions for automated merging and remapping suggestions
+
+
+2. Histogram
+------------
+
++--------------------+-------+
+|       Fanout       | Count |
++--------------------+-------+
+| Total control sets |    19 |
+| >= 0 to < 4        |     7 |
+| >= 4 to < 6        |     2 |
+| >= 6 to < 8        |     2 |
+| >= 8 to < 10       |     2 |
+| >= 10 to < 12      |     0 |
+| >= 12 to < 14      |     2 |
+| >= 14 to < 16      |     0 |
+| >= 16              |     4 |
++--------------------+-------+
+* Control sets can be remapped at either synth_design or opt_design
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |              49 |           16 |
+| No           | No                    | Yes                    |               0 |            0 |
+| No           | Yes                   | No                     |              18 |            7 |
+| Yes          | No                    | No                     |              45 |           20 |
+| Yes          | No                    | Yes                    |               0 |            0 |
+| Yes          | Yes                   | No                     |              14 |            4 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++--------------------------------------------------------------+----------------------------------------------------------------+-----------------------------------------------------------------------------------------------+------------------+----------------+
+|                         Clock Signal                         |                          Enable Signal                         |                                        Set/Reset Signal                                       | Slice Load Count | Bel Load Count |
++--------------------------------------------------------------+----------------------------------------------------------------+-----------------------------------------------------------------------------------------------+------------------+----------------+
+|  BUFGP1/O                                                    | processor/write_strobe_flop_1[2]                               |                                                                                               |                1 |              1 |
+|  BUFGP1/O                                                    | processor/write_strobe_flop_1[3]                               |                                                                                               |                1 |              1 |
+|  BUFGP1/O                                                    | processor/write_strobe_flop_1[1]                               |                                                                                               |                1 |              1 |
+|  BUFGP1/O                                                    | processor/write_strobe_flop_1[0]                               |                                                                                               |                1 |              1 |
+|  program_rom/instantiate_loader.jtag_loader_6_inst/CLK       |                                                                |                                                                                               |                1 |              1 |
+|  program_rom/instantiate_loader.jtag_loader_6_inst/shift_clk |                                                                |                                                                                               |                1 |              1 |
+|  BUFGP1/O                                                    | processor/flag_enable                                          | processor/internal_reset                                                                      |                1 |              2 |
+|  BUFGP1/O                                                    | processor/E[0]                                                 |                                                                                               |                1 |              4 |
+|  program_rom/instantiate_loader.jtag_loader_6_inst/CLK       |                                                                | program_rom/instantiate_loader.jtag_loader_6_inst/jtag_loader_gen.control_dout_int[7]_i_1_n_0 |                1 |              4 |
+|  BUFGP1/O                                                    |                                                                | processor/internal_reset                                                                      |                3 |              6 |
+|  BUFGP1/O                                                    | processor/write_strobe_flop_0[0]                               |                                                                                               |                4 |              7 |
+|  BUFGP1/O                                                    |                                                                | program_rom/instruction[7]                                                                    |                3 |              8 |
+|  BUFGP1/O                                                    | processor/spm_enable                                           |                                                                                               |                2 |              8 |
+|  BUFGP1/O                                                    | processor/t_state_0                                            | processor/internal_reset                                                                      |                3 |             12 |
+|  program_rom/instantiate_loader.jtag_loader_6_inst/shift_clk | program_rom/instantiate_loader.jtag_loader_6_inst/shift        |                                                                                               |                5 |             13 |
+|  BUFGP1/O                                                    | processor/register_enable                                      |                                                                                               |                2 |             16 |
+|  BUFGP1/O                                                    | processor/t_state_0                                            |                                                                                               |                2 |             16 |
+|  program_rom/instantiate_loader.jtag_loader_6_inst/shift_clk | program_rom/instantiate_loader.jtag_loader_6_inst/jtag_din_int |                                                                                               |                6 |             17 |
+|  BUFGP1/O                                                    |                                                                |                                                                                               |               14 |             47 |
++--------------------------------------------------------------+----------------------------------------------------------------+-----------------------------------------------------------------------------------------------+------------------+----------------+
+
+

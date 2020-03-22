@@ -1,0 +1,217 @@
+               ; KCPSM6 Program
+               ; This program reads row inputs through one input (row_col_port) port
+               ; Last 4 bits represent row inputs
+               ; One input port (Switch) is used to read switch input
+               ; One output port(row_col_port) is used to drive 4 column outputs
+               ; One output port(Anode) drives the anode value
+               ; Another output port (SSD_out) sends the value to be displayed
+               ; KCPSM6 Program
+               ; prom_kypd_5RO_6WO.psm (solution)
+               ; keypad interface using picoblaze
+               ; 10/20/2017 Designed by: Shashidhar Aravind Kulkarni <shashidk@usc.edu> and Gandhi Puvvada <gandhi@usc.edu>
+               ; 3/9/2020  Ported to Nexys-4 by "Yue (Julien) Niu" <yueniu@usc.edu> and Gandhi Puvvada <gandhi@usc.edu>
+               ;
+               ; ======
+               ; Parts of our solution code is removed and we marked such portions with a "TODO" for your to complete.
+               ; Complete the      TODO sections to complete this .psm file.
+               ; ======
+               ; The key pressed on the hex keypad is detected and is displayed on 0 to 4 SSDs
+               ; based on how many of the 4 switches (SW3 to SW0) are set to ON position.
+               ;
+               ; Dealys in Key detection part:
+               ; We wait for COL_DRV_DELAY time of DELAY_1MS (about 1 millisecond = 100,000 of 10ns clocks
+               ; and drive the columns and then
+               ; wait for about ROW_CHK_DELAY of about 100x4 clocks
+               ; and read thhe rows and check.
+               ; We do not support multiple key operation at the same time.
+               ; Interface with the hardware:
+               ; This program writes to 4 output ports (port_ids  00, 01, 02, 03 hex, symbolic names: row0_col0 row1_col1 row2_col2 row3_col3)
+               ; to drive the four column outputs (going to the keypad) with one-cold combination.
+               ; The same port_ids are used for the input ports to read the row inputs (coming from the keypad) one row at a time!
+               ; There is no conflict in using the same port_ids for both (an input port and an output port).
+               ; Column data is sent on out_port[0] and row data is received on in_port[0].
+               ; port-id = 04 hex (symbolic name = Switch_Anode) is shared between
+               ; an input port to read 4 switches (SW3-SW0) and
+               ; an output port to drive 4 anodes (for the 4 SSDs).
+               ; INPUT  s5, Switch_Anode ;
+               ; OUTPUT s5, Switch_Anode ;
+               ; One more port_id = 05 hex (symbolic name = SSD_out) is used for
+               ; an output port to send 7 segment data to be displayed on the SSD(s).
+               ; OUTPUT s5, SSD_out ;
+               ;**************************************************************************************
+               ;Port definitions
+               ;**************************************************************************************
+               CONSTANT row0_col0, 00    ; port 0 for input of row0 and output of col0
+               CONSTANT row1_col1, 01    ; port 1 for input of row1 and output of col1
+               CONSTANT row2_col2, 02    ; port 2 for input of row2 and output of col2 <== TODO #1
+               CONSTANT row3_col3, 03    ; port 3 for input of row3 and output of col3
+               CONSTANT Switch_Anode, 04 ; port 4 for input of switches and output of anode
+               CONSTANT SSD_out, 05      ; port 5 for output of SSD
+               ;**************************************************************************************
+               ;Mask definitions
+               ;**************************************************************************************
+               CONSTANT Mask0111, 07     ; to check if row 0 is low 7 = 0111
+               CONSTANT Mask1011, 0B     ; to check if row 1 is low B = 1011
+               CONSTANT Mask1101, 0D     ; to check if row 2 is low D = 1101
+               CONSTANT Mask1110, 0E     ; to check if row 3 is low E = 1110
+               ;**************************************************************************************
+               ;SSD Cathode definitions
+               ;**************************************************************************************
+               CONSTANT Display0, 40     ; code to display 0 on SSD
+               CONSTANT Display1, 79     ; code to display 1 on SSD
+               CONSTANT Display2, 24     ; code to display 2 on SSD
+               CONSTANT Display3, 30     ; code to display 3 on SSD
+               CONSTANT Display4, 19     ; code to display 4 on SSD
+               CONSTANT Display5, 12     ; code to display 5 on SSD
+               CONSTANT Display6, 02     ; code to display 6 on SSD
+               CONSTANT Display7, 78     ; code to display 7 on SSD
+               CONSTANT Display8, 00     ; code to display 8 on SSD
+               CONSTANT Display9, 10     ; code to display 9 on SSD
+               CONSTANT DisplayA, 08     ; code to display A on SSD
+               CONSTANT DisplayB, 03     ; code to display B on SSD
+               CONSTANT DisplayC, 46     ; code to display C on SSD
+               CONSTANT DisplayD, 21     ; code to display D on SSD
+               CONSTANT DisplayE, 06     ; code to display E on SSD
+               CONSTANT DisplayF, 0E     ; code to display F on SSD
+               ;**************************************************************************************
+               ;MAIN PROGRAM
+               ;**************************************************************************************
+        START: LOAD s1, 100'd            ; s1 is used to wait for 100*4 clocks after driving column
+               LOAD s2, FE               ; to send make only last bit as 0 to the col output (to a single line column output)
+               LOAD s3, FF               ; to send all 1's to the unselected col output
+     COL0_OUT: INPUT s5, Switch_Anode    ; read the switches
+               XOR s5, FF                ; to send to anodes based on switches -- please understand the XOR operation
+               OUTPUT s5, Switch_Anode   ; ; send anode value to use SSD
+               CALL DELAY_1MS            ;
+               OUTPUT s2, row0_col0      ; drive column 0 to 0 <== TODO #2
+               OUTPUT s3, row1_col1      ; drive column 1 to 1
+               OUTPUT s3, row2_col2      ; drive column 2 to 1
+               OUTPUT s3, row3_col3      ; drive column 3 to 1
+               CALL ROW_CHK_DELAY        ;
+  ROW_CHECK00: CALL READ_ROWS            ; start checking rows
+               COMPARE s4, Mask0111      ; check if the row0 is 0 and others are 1 (0111)
+               JUMP NZ, ROW_CHECK01      ; Jump to next row checking if row0 is not 0
+               LOAD s5, Display1         ; Load  to display 1
+               OUTPUT s5, SSD_out        ; Send value to be displayed on SSD
+               JUMP COL1_OUT             ; Go to next column driving
+  ROW_CHECK01: COMPARE s4, Mask1011      ; check if the row1 is 0 and others are 1 (1011)
+               JUMP NZ, ROW_CHECK02      ; Jump to next row checking if row1 is not 0
+               LOAD s5, Display4         ; Load to display 4
+               OUTPUT s5, SSD_out        ; Send value to be displayed on SSD
+               JUMP COL1_OUT             ; Go to next column driving
+  ROW_CHECK02: COMPARE s4, Mask1101      ; check if the row2 is 0 and others are 1 (1101)
+               JUMP NZ, ROW_CHECK03      ; Jump to next row checking if row2 is not 0
+               LOAD s5, Display7         ; Load to display 7
+               OUTPUT s5, SSD_out        ; Send value to be displayed on SSD
+               JUMP COL1_OUT             ; Go to next column driving
+  ROW_CHECK03: COMPARE s4, Mask1110      ; check if the row3 is 0 and others are 1 (1110)
+               JUMP NZ, COL1_OUT         ; Jump to next column driving if row3 is not 0
+               LOAD s5, Display0         ; Load to display 0
+               OUTPUT s5, SSD_out        ; Send value to be displayed on SSD
+     COL1_OUT: CALL DELAY_1MS            ;
+               OUTPUT s3, row0_col0      ; drive column 0 to 1 <== TODO #3
+               OUTPUT s2, row1_col1      ; drive column 1 to 0
+               OUTPUT s3, row2_col2      ; drive column 2 to 1
+               OUTPUT s3, row3_col3      ; drive column 3 to 1
+               CALL ROW_CHK_DELAY        ;
+  ROW_CHECK10: CALL READ_ROWS            ; start checking rows
+               COMPARE s4, Mask0111      ; check if the row0 is 0 and others are 1 (0111)
+               JUMP NZ, ROW_CHECK11      ; Jump to next row checking if row0 is not 0
+               LOAD s5, Display2         ; Load to display 2
+               OUTPUT s5, SSD_out        ; Send value to be displayed on SSD
+               JUMP COL2_OUT             ; Go to next column driving
+  ROW_CHECK11: COMPARE s4, Mask1011      ; check if the row1 is 0 and others are 1 (1011)
+               JUMP NZ, ROW_CHECK12      ; Jump to next row checking if row1 is not 0
+               LOAD s5, Display5         ; Load to display 5
+               OUTPUT s5, SSD_out        ; Send value to be displayed on SSD
+               JUMP COL2_OUT             ; Go to next column driving
+  ROW_CHECK12: COMPARE s4, Mask1101      ; <== copy the code from part1
+               JUMP NZ, ROW_CHECK13      ; Jump to next row checking if row2 is not 0
+               LOAD s5, Display8         ; Load to display 8
+               OUTPUT s5, SSD_out        ; Send value to be displayed on SSD
+               JUMP COL2_OUT             ; Go to next column driving
+  ROW_CHECK13: COMPARE s4, Mask1110      ; <== copy the code from part1
+               JUMP NZ, COL2_OUT         ; Jump to next column driving if row3 is not 0
+               LOAD s5, DisplayF         ; Load to display F
+               OUTPUT s5, SSD_out        ; Send value to be displayed on SSD
+     COL2_OUT: CALL DELAY_1MS            ;
+               OUTPUT s3, row0_col0      ; drive column 0 to 1 <<== TODO #4
+               OUTPUT s3, row1_col1      ; drive column 1 to 1
+               OUTPUT s2, row2_col2      ; drive column 2 to 0
+               OUTPUT s3, row3_col3      ; drive column 3 to 1
+               CALL ROW_CHK_DELAY        ;
+  ROW_CHECK20: CALL READ_ROWS            ; start checking rows
+               COMPARE s4, Mask0111      ; check if the row0 is 0 and others are 1 (0111)
+               JUMP NZ, ROW_CHECK21      ; Jump to next row checking if row0 is not 0
+               LOAD s5, Display3         ; Load  to display 3
+               OUTPUT s5, SSD_out        ; Send value to be displayed on SSD
+               JUMP COL3_OUT             ; Go to next column driving
+  ROW_CHECK21: COMPARE s4, Mask1011      ; check if the row1 is 0 and others are 1 (1011)
+               JUMP NZ, ROW_CHECK22      ; Jump to next row checking if row1 is not 0
+               LOAD s5, Display6         ; Load to display 6
+               OUTPUT s5, SSD_out        ; Send value to be displayed on SSD
+               JUMP COL3_OUT             ; Go to next column driving
+  ROW_CHECK22: COMPARE s4, Mask1101      ; check if the row2 is 0 and others are 1 (1101)
+               JUMP NZ, ROW_CHECK23      ; Jump to next row checking if row2 is not 0
+               LOAD s5, Display9         ; Load to display 9
+               OUTPUT s5, SSD_out        ; Send value to be displayed on SSD
+               JUMP COL3_OUT             ; Go to next column driving
+  ROW_CHECK23: COMPARE s4, Mask1110      ; check if the row3 is 0 and others are 1 (1110)
+               JUMP NZ, COL3_OUT         ; Jump to next column driving if row3 is not 0
+               LOAD s5, DisplayE         ; Load to display E
+               OUTPUT s5, SSD_out        ; Send value to be displayed on SSD
+     COL3_OUT: CALL DELAY_1MS            ;
+               OUTPUT s3, row0_col0      ; drive column 0 to 1 <== TODO #5
+               OUTPUT s3, row1_col1      ; drive column 1 to 1
+               OUTPUT s3, row2_col2      ; drive column 2 to 1
+               OUTPUT s2, row3_col3      ; drive column 3 to 0
+               CALL ROW_CHK_DELAY        ;
+  ROW_CHECK30: CALL READ_ROWS            ; start checking rows
+               COMPARE s4, Mask0111      ; check if the row0 is 0 and others are 1 (0111)
+               JUMP NZ, ROW_CHECK31      ; Jump to next row checking if row0 is not 0
+               LOAD s5, DisplayA         ; Load to display A
+               OUTPUT s5, SSD_out        ; Send value to be displayed on SSD
+               JUMP COL0_OUT             ; Go to next column driving
+  ROW_CHECK31: COMPARE s4, Mask1011      ; check if the row1 is 0 and others are 1 (1011)
+               JUMP NZ, ROW_CHECK32      ; Jump to next row checking if row1 is not 0
+               LOAD s5, DisplayB         ; Load to display B
+               OUTPUT s5, SSD_out        ; Send value to be displayed on SSD
+               JUMP COL0_OUT             ; Jump to column 0 driving
+  ROW_CHECK32: COMPARE s4, Mask1101      ; check if the row2 is 0 and others are 1 (1101)
+               JUMP NZ, ROW_CHECK33      ; Jump to next row checking if row2 is not 0
+               LOAD s5, DisplayC         ; Load to display C
+               OUTPUT s5, SSD_out        ; Send value to be displayed on SSD
+               JUMP COL0_OUT             ; Jump to column 0 driving
+  ROW_CHECK33: COMPARE s4, Mask1110      ; <== copy the code from part1
+               JUMP NZ, COL0_OUT         ; Jump to next column driving if row3 is not 0
+               LOAD s5, DisplayD         ; Load to display D
+               OUTPUT s5, SSD_out        ; Send value to be displayed on SSD
+               JUMP COL0_OUT             ; Jump to column 0 driving
+               ; subroutine to wait for driving column
+    DELAY_1MS: LOAD sA, 00
+               LOAD s9, 27
+               LOAD s8, 10               ; s8, s9, sA are used to generate 1ms software delay
+   SOFT_DELAY: LOAD s8, s8               ; pad loop to make it 10 clock cycles (5 instructions)
+               SUB s8, 1'd
+               SUBCY s9, 0'd
+               SUBCY sA, 0'd
+               JUMP NZ, SOFT_DELAY       ;
+               RETURN                    ;
+               ; subroutine to wait for checking row  ; <== copy the code from part1
+ROW_CHK_DELAY: SUB s1, 1'd               ; wait for 100*4 clocks (we did previously  LOAD s1, 100'd )
+               JUMP NZ, ROW_CHK_DELAY    ;
+               LOAD s1, 100'd            ;
+               RETURN                    ; load the count value to be used in next row check
+               ; read input rows <== TODO #6
+    READ_ROWS: INPUT s0, row0_col0
+               LOAD s4, s0               ; s4 stores concatenated values along rows
+               INPUT s0, row1_col1
+               SL0 s4
+               OR s4, s0                 ; concatenate inputs
+               INPUT s0, row2_col2
+               SL0 s4
+               OR s4, s0                 ; concatenate inputs
+               INPUT s0, row3_col3
+               SL0 s4
+               OR s4, s0                 ; concatenate inputs
+               RETURN 
