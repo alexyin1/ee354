@@ -13,7 +13,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 `timescale 1ns / 1ps
 
-module ee354_GCD_CEN_tb_v;
+module ee354_GCD_tb_v_part2;
 
 	// Inputs
 	reg Clk, CEN;
@@ -30,7 +30,7 @@ module ee354_GCD_CEN_tb_v;
 	wire q_Mult;
 	wire q_Done;
 	reg [6*8:0] state_string; // 6-character string for symbolic display of state
-	integer clk_cnt, start_clock_cnt,clocks_taken;
+	integer clk_cnt, start_clock_cnt,clocks_taken, a_loop, b_loop;
 	// Instantiate the Unit Under Test (UUT)
 	ee354_GCD uut (
 		.Clk(Clk), 
@@ -50,11 +50,39 @@ module ee354_GCD_CEN_tb_v;
 		.q_Done(q_Done)
 	);
 		
+	task APPLY_STIMULUS;
+		input[7:0] Ain_value;
+		input[7:0] Bin_value;
+		begin
+			Ain = Ain_value;
+			Bin = Bin_value;
+			@(posedge Clk);
+			#1;
+			Start = 1;
+			@(posedge Clk);
+			#1;
+			Start = 0;
+			start_clock_cnt = clk_cnt;
+			
+			wait(q_Done);
+			#1;
+			Ack = 1;
+			clocks_taken = clk_cnt - start_clock_cnt;
+			@(posedge Clk);
+			#1;
+			Ack = 0;
+
+			$display("Ain: %d Bin: %d GCD: %d", Ain, Bin, AB_GCD);
+			$display("It took %d clock(s) to compute the GCD \n", clocks_taken);
+		end
+	endtask
 		
-		always  begin #5; Clk = ~ Clk; end
-		initial begin
+	always  begin #5; Clk = ~ Clk; end
+	always @(posedge Clk) clk_cnt = clk_cnt + 1;
+	
+	initial begin
 		// Initialize Inputs
-		clk_cnt=0;
+		clk_cnt=0;	
 		Clk = 0;
 		CEN = 1; // ****** in Part 2 ******
 				 // Here, in Part 1, we are enabling clock permanently by making CEN a '1' constantly.
@@ -70,13 +98,25 @@ module ee354_GCD_CEN_tb_v;
 		Ack = 0;
 		Ain = 0;
 		Bin = 0;
-
+		start_clock_cnt = 0;
 
 		//generate Reset, Start, Ack, Ain, Bin signals according to the waveform on page 14/19
 		//add start_clock_cnt and clocks_taken code in the correct areas
 		//add $display statements per 6.10 on page 13/19
+		@(posedge Clk);
+		@(posedge Clk);
+		#1;
+		Reset = 1;
 		
-		
+		@(posedge Clk);
+		#1;
+		Reset = 0;
+
+		for (a_loop = 2; a_loop <= 63; a_loop = a_loop + 1)
+			for (b_loop = 2; b_loop <= 63; b_loop = b_loop + 1)
+				begin
+					APPLY_STIMULUS(a_loop, b_loop);
+				end
 
 	end
 	

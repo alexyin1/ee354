@@ -1,0 +1,30 @@
+Ain:   2 Bin:   2 GCD:   2
+It took           1 clock(s) to compute the GCD 
+
+Ain:   2 Bin:   3 GCD:   1
+It took           5 clock(s) to compute the GCD 
+
+Ain:   2 Bin:   4 GCD:   2
+It took           5 clock(s) to compute the GCD 
+
+Ain:   2 Bin:   5 GCD:   1
+It took           6 clock(s) to compute the GCD 
+
+Ain:   2 Bin:   6 GCD:   2
+It took           6 clock(s) to compute the GCD 
+
+Ain:   2 Bin:   7 GCD:   1
+It took           7 clock(s) to compute the GCD 
+
+Ain:   2 Bin:   8 GCD:   2
+It took           6 clock(s) to compute the GCD 
+
+Ain:   2 Bin:   9 GCD:   1
+It took           7 clock(s) to compute the GCD 
+
+Ain:   2 Bin:  10 GCD:   2
+It took           7 clock(s) to compute the GCD 
+
+Ain:   2 Bin:  11 GCD:   1
+It took           8 clock(s) to compute the GCD 
+
