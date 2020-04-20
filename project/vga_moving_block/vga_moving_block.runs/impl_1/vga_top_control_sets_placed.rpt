@@ -1,0 +1,99 @@
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
+| Date         : Tue Apr  7 20:01:30 2020
+| Host         : DESKTOP-JS3JO0N running 64-bit major release  (build 9200)
+| Command      : report_control_sets -verbose -file vga_top_control_sets_placed.rpt
+| Design       : vga_top
+| Device       : xc7a100t
+------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Total control sets                                       |    21 |
+|    Minimum number of control sets                        |    21 |
+|    Addition due to synthesis replication                 |     0 |
+|    Addition due to physical synthesis replication        |     0 |
+| Unused register locations in slices containing registers |    96 |
++----------------------------------------------------------+-------+
+* Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
+** Run report_qor_suggestions for automated merging and remapping suggestions
+
+
+2. Histogram
+------------
+
++--------------------+-------+
+|       Fanout       | Count |
++--------------------+-------+
+| Total control sets |    21 |
+| >= 0 to < 4        |     3 |
+| >= 4 to < 6        |     9 |
+| >= 6 to < 8        |     1 |
+| >= 8 to < 10       |     2 |
+| >= 10 to < 12      |     1 |
+| >= 12 to < 14      |     0 |
+| >= 14 to < 16      |     0 |
+| >= 16              |     5 |
++--------------------+-------+
+* Control sets can be remapped at either synth_design or opt_design
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |               3 |            3 |
+| No           | No                    | Yes                    |              23 |            7 |
+| No           | Yes                   | No                     |              10 |            3 |
+| Yes          | No                    | No                     |               4 |            2 |
+| Yes          | No                    | Yes                    |              34 |           22 |
+| Yes          | Yes                   | No                     |             134 |           40 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++--------------------+----------------------------------------------------------+-------------------------------------------------+------------------+----------------+
+|    Clock Signal    |                       Enable Signal                      |                 Set/Reset Signal                | Slice Load Count | Bel Load Count |
++--------------------+----------------------------------------------------------+-------------------------------------------------+------------------+----------------+
+|  ClkPort_IBUF_BUFG |                                                          |                                                 |                1 |              1 |
+|  dc/clk25_reg_n_0  |                                                          |                                                 |                1 |              1 |
+|  dc/pulse          |                                                          |                                                 |                1 |              1 |
+|  ClkPort_IBUF_BUFG | ee354_debouncer_1/MCEN_count                             | ee354_debouncer_1/MCEN_count[3]_i_1_n_0         |                1 |              4 |
+|  ClkPort_IBUF_BUFG | ee354_debouncer_1/FSM_sequential_state_reg[3]_i_1_n_0    | BtnC_IBUF                                       |                3 |              4 |
+|  ClkPort_IBUF_BUFG | ee354_debouncer_2/FSM_sequential_state_reg[3]_i_1__0_n_0 | BtnC_IBUF                                       |                3 |              4 |
+|  ClkPort_IBUF_BUFG | ee354_debouncer_2/MCEN_count                             | ee354_debouncer_2/MCEN_count[3]_i_1__0_n_0      |                2 |              4 |
+|  ClkPort_IBUF_BUFG | ee354_debouncer_3/FSM_sequential_state_reg[3]_i_1__1_n_0 | BtnC_IBUF                                       |                2 |              4 |
+|  ClkPort_IBUF_BUFG | ee354_debouncer_3/MCEN_count                             | ee354_debouncer_3/MCEN_count[3]_i_1__1_n_0      |                1 |              4 |
+|  ClkPort_IBUF_BUFG | ee354_debouncer_4/MCEN_count                             | ee354_debouncer_4/MCEN_count[3]_i_1__2_n_0      |                1 |              4 |
+|  ClkPort_IBUF_BUFG | ee354_debouncer_4/FSM_sequential_state_reg[3]_i_1__2_n_0 | BtnC_IBUF                                       |                1 |              4 |
+|  dc/clk25_reg_n_0  | dc/hCount[9]_i_1_n_0                                     |                                                 |                2 |              4 |
+|  dc/clk25_reg_n_0  | dc/hCount[9]_i_1_n_0                                     | dc/vCount[9]_i_1_n_0                            |                3 |              6 |
+|  sc/move_clk       | sc/ypos[9]_i_1_n_0                                       | BtnC_IBUF                                       |                6 |              9 |
+|  sc/move_clk       | sc/xpos[9]_i_1_n_0                                       | BtnC_IBUF                                       |                7 |              9 |
+|  dc/clk25_reg_n_0  |                                                          | dc/hCount[9]_i_1_n_0                            |                3 |             10 |
+|  ClkPort_IBUF_BUFG |                                                          | BtnC_IBUF                                       |                7 |             23 |
+|  ClkPort_IBUF_BUFG | ee354_debouncer_1/debounce_count                         | ee354_debouncer_1/debounce_count[27]_i_1_n_0    |                8 |             28 |
+|  ClkPort_IBUF_BUFG | ee354_debouncer_2/debounce_count                         | ee354_debouncer_2/debounce_count[27]_i_1__0_n_0 |                8 |             28 |
+|  ClkPort_IBUF_BUFG | ee354_debouncer_3/debounce_count                         | ee354_debouncer_3/debounce_count[27]_i_1__1_n_0 |                8 |             28 |
+|  ClkPort_IBUF_BUFG | ee354_debouncer_4/debounce_count                         | ee354_debouncer_4/debounce_count[27]_i_1__2_n_0 |                8 |             28 |
++--------------------+----------------------------------------------------------+-------------------------------------------------+------------------+----------------+
+
+
