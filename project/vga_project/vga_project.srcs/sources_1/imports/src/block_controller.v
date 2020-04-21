@@ -1,7 +1,24 @@
-/* Problems:
-- 2's complement 10'b1111111011 AKA -5 doesn't work
-- Timer doesn't correctly wait for 10 secs
+/* 
+TODO:
+Problems:
+- 2's complement 10'b1111111011 AKA -5 doesn't work, so you can't detect a collision when the "bird" is below the blocks
+(This is because we compare the positions between the bird and the blocks by performing the subtraction block - bird, so
+you can have a negative number and still collide I.E. when the bird is below the block)
 - SSD doesn't show the Qp3, Qp2, Qp1, Qi states on SSD4, but SSD5 shows Done state correctly
+- LEDs don't work?
+
+Tasks:
+- Whenever you miss a block and it collides with the left screen, choose a random vertical position to start at for the next time
+it comes through
+- Whenever you collide with a block, choose a random vertical position to start at for the next time it comes through 
+- Add functionality such that if you hold down the up or down buttons, you continuously move up/down the screen (This probably
+involves some functionality with CCEN from ee354_debounce_DPB_SCEN_CCEN_MCEN_r1.v).
+- Maybe add a displayable timer using the SSDs or the screen?
+
+Code cleanup:
+- Is there a way to make the routines in PHASE1, PHASE2, PHASE3 into a task/function that you can provide parameters to?
+The functionalities for each are basically the same, except the block movements are just different.
+- Is there a better way to communicate between the move_clk and the full clock cycle rather than just using flags?
 */
 
 `timescale 1ns / 1ps
