@@ -143,7 +143,7 @@ module divider_top		(
 //------------
 // OUTPUT: LEDS
 	
-	assign {Ld7, Ld6, Ld5, Ld4, Ld3} = {Qi, , Qd, Done};
+	assign {Ld7, Ld6, Ld5, Ld4} = {Qi, Qc, Qd, Done};
 	assign {Ld3, Ld2, Ld1, Ld0} = {Start, BtnU, Ack, BtnD}; 
 	
 //------------
