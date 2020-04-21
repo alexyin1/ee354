@@ -59,7 +59,6 @@ module block_controller
 	reg [27:0] timer_count;
 	reg [3:0] check_ten_secs;
 	
-	//these two values dictate the center of the block, incrementing and decrementing them at a rate leads the block to move in certain directions
 	reg [9:0] bird_x, bird_y;
 	reg [9:0] block_x, block_y;
 	reg [9:0] bad_x, bad_y;
@@ -106,7 +105,8 @@ module block_controller
 		else	
 			rgb = WHITE;
 	end
-		//the +-5 for the positions give the dimension of the block (i.e. it will be 10x10 pixels)
+	
+	//the +-5 for the positions give the dimension of the block (i.e. it will be 10x10 pixels)
 	assign bird_fill=vCount>=(bird_y-5) && vCount<=(bird_y+5) && hCount>=(bird_x-5) && hCount<=(bird_x+5);
 	assign block_fill = vCount>=(block_y-5) && vCount<=(block_y+5) && hCount>=(block_x-5) && hCount<=(block_x+5);
 	assign bad_fill = vCount>=(bad_y-5) && vCount<=(bad_y+5) && hCount>=(bad_x-5) && hCount<=(bad_x+5);
@@ -478,11 +478,11 @@ module block_controller
 	always@(posedge clk,posedge rst) begin
 		if(rst)
 		begin
+			full_clk_state <= FULL_CLK_INIT;
 			direction<=2'bXX;
 			ten_secs <= 1'bX;
 			timer_count <= 28'bXXXXXXXXXXXXXXXXXXXXXXXXXXXX;
 			check_ten_secs <= 4'bXXXX;
-			full_clk_state <= FULL_CLK_INIT;
 		end
 		else 
 		begin
