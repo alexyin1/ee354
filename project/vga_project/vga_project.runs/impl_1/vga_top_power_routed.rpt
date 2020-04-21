@@ -1,7 +1,7 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-| Date             : Mon Apr 20 04:00:46 2020
+| Date             : Mon Apr 20 21:57:34 2020
 | Host             : DESKTOP-BBSH87J running 64-bit major release  (build 9200)
 | Command          : report_power -file vga_top_power_routed.rpt -pb vga_top_power_summary_routed.pb -rpx vga_top_power_routed.rpx
 | Design           : vga_top
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.107        |
+| Total On-Chip Power (W)  | 0.113        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.010        |
+| Dynamic (W)              | 0.015        |
 | Device Static (W)        | 0.097        |
 | Effective TJA (C/W)      | 4.6          |
 | Max Ambient (C)          | 84.5         |
@@ -52,18 +52,18 @@ Table of Contents
 +----------------+-----------+----------+-----------+-----------------+
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
-| Clocks         |     0.002 |        3 |       --- |             --- |
-| Slice Logic    |     0.001 |      512 |       --- |             --- |
-|   LUT as Logic |     0.001 |      210 |     63400 |            0.33 |
-|   CARRY4       |    <0.001 |       50 |     15850 |            0.32 |
-|   Register     |    <0.001 |      180 |    126800 |            0.14 |
+| Clocks         |     0.001 |        3 |       --- |             --- |
+| Slice Logic    |     0.001 |      560 |       --- |             --- |
+|   LUT as Logic |     0.001 |      234 |     63400 |            0.37 |
+|   CARRY4       |    <0.001 |       52 |     15850 |            0.33 |
+|   Register     |    <0.001 |      190 |    126800 |            0.15 |
 |   BUFG         |    <0.001 |        1 |        32 |            3.13 |
 |   F7/F8 Muxes  |    <0.001 |        2 |     63400 |           <0.01 |
 |   Others       |     0.000 |        8 |       --- |             --- |
-| Signals        |     0.001 |      334 |       --- |             --- |
-| I/O            |     0.006 |       39 |       210 |           18.57 |
+| Signals        |     0.001 |      360 |       --- |             --- |
+| I/O            |     0.012 |       39 |       210 |           18.57 |
 | Static Power   |     0.097 |          |           |                 |
-| Total          |     0.107 |          |           |                 |
+| Total          |     0.113 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -74,8 +74,8 @@ Table of Contents
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) |
 +-----------+-------------+-----------+-------------+------------+
 | Vccint    |       1.000 |     0.019 |       0.004 |      0.015 |
-| Vccaux    |       1.800 |     0.018 |       0.000 |      0.018 |
-| Vcco33    |       3.300 |     0.006 |       0.002 |      0.004 |
+| Vccaux    |       1.800 |     0.019 |       0.000 |      0.018 |
+| Vcco33    |       3.300 |     0.007 |       0.003 |      0.004 |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |
 | Vcco18    |       1.800 |     0.000 |       0.000 |      0.000 |
 | Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |
@@ -142,7 +142,7 @@ Table of Contents
 +---------+-----------+
 | Name    | Power (W) |
 +---------+-----------+
-| vga_top |     0.010 |
+| vga_top |     0.015 |
 |   sc    |     0.002 |
 +---------+-----------+
 
