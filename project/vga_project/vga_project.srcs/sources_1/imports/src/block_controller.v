@@ -1,9 +1,6 @@
 /* 
 TODO:
 Problems:
-- 2's complement 10'b1111111011 AKA -5 doesn't work, so you can't detect a collision when the "bird" is below the blocks
-(This is because we compare the positions between the bird and the blocks by performing the subtraction block - bird, so
-you can have a negative number and still collide I.E. when the bird is below the block)
 - SSD doesn't show the Qp3, Qp2, Qp1, Qi states on SSD4, but SSD5 shows Done state correctly
 - LEDs don't work?
 
@@ -13,7 +10,6 @@ it comes through
 - Whenever you collide with a block, choose a random vertical position to start at for the next time it comes through 
 - Add functionality such that if you hold down the up or down buttons, you continuously move up/down the screen (This probably
 involves some functionality with CCEN from ee354_debounce_DPB_SCEN_CCEN_MCEN_r1.v).
-- Maybe add a displayable timer using the SSDs or the screen?
 
 Code cleanup:
 - Is there a way to make the routines in PHASE1, PHASE2, PHASE3 into a task/function that you can provide parameters to?
@@ -41,6 +37,8 @@ module block_controller
 	reg [27:0]	DIV_CLK;
 	reg [4:0] state;
 	reg [1:0] full_clk_state;
+	reg [3:0] random;
+	integer i;
 	
 	always @ (posedge clk, posedge rst)  
 	begin : CLOCK_DIVIDER
@@ -54,7 +52,6 @@ module block_controller
 	assign move_clk=DIV_CLK[19];
 	wire bird_fill;
 	wire block_fill;
-	integer i;
 
 	reg [27:0] timer_count;
 	reg [3:0] check_ten_secs;
@@ -65,8 +62,8 @@ module block_controller
 	reg [9:0] block_sub_x, block_sub_y;
 	reg [9:0] bad_sub_x, bad_sub_y;
 
-	// wire feedback;
-	// assign feedback = block_x
+	wire feedback;
+	assign feedback = random[0] ^ random[3];
 
 	reg direction_chosen, state_read_ten_secs;
 	
@@ -74,6 +71,8 @@ module block_controller
 	RED   = 12'b1111_0000_0000,
 	GREEN = 12'b0000_1111_0000,
 	BLUE  = 12'b0000_0000_1111,
+	PINK1 = 12'b1111_1100_1111,
+	PINK2 = 12'b1111_1010_1111,
 	BLACK = 12'b0000_0000_0000,
 	WHITE = 12'b1111_1111_1111;
 
@@ -102,7 +101,11 @@ module block_controller
 			rgb = RED;
 		else if (~bright)
 			rgb = BLACK;
-		else	
+		else if (state == PHASE2)
+			rgb = PINK1;
+		else if (state == PHASE3)
+			rgb = PINK2;
+		else
 			rgb = WHITE;
 	end
 	
@@ -110,6 +113,154 @@ module block_controller
 	assign bird_fill=vCount>=(bird_y-5) && vCount<=(bird_y+5) && hCount>=(bird_x-5) && hCount<=(bird_x+5);
 	assign block_fill = vCount>=(block_y-5) && vCount<=(block_y+5) && hCount>=(block_x-5) && hCount<=(block_x+5);
 	assign bad_fill = vCount>=(bad_y-5) && vCount<=(bad_y+5) && hCount>=(bad_x-5) && hCount<=(bad_x+5);
+
+	// Task for checking positions and boundaries for blocks
+	task BLOCK_POS_CHECK;
+		input [9:0] x;
+		input [9:0] y;
+		input [9:0] sub_x;
+		input [9:0] sub_y;
+		input [3:0] block_movement;
+		begin
+			x <= x - block_movement;
+			if (x <= 150) 
+			begin
+				x <= 820;
+				for (i = 0; i <= 15; i = i + 1)
+				begin
+					if (random == i) y <= 50 + 2 * i;
+				end
+			end
+			
+			sub_x <= x - bird_x;
+			sub_y <= y - bird_y;
+			
+			if ((sub_x >= 0 && sub_x <= 10 && sub_y >= 0 && sub_y <= 10) || (sub_x >= 0 && sub_x <= 10 && sub_y >= 1014 && sub_y <= 1023) 
+				|| (sub_x >= 1015 && sub_x <= 1023 && sub_y >= 0 && sub_y <= 10) || (sub_x >= 1015 && sub_x <= 1023 && sub_y >= 1014 && sub_y <= 1023))
+			begin
+				x <= 820;
+				for (i = 0; i <= 15; i = i + 1)
+				begin
+					if (random == i) y <= 50 + 2 * i;
+				end
+
+				sub_x <= 11;
+				sub_y <= 11;
+
+				score_ones <= score_ones + 1;
+				if (score_ones == 9)
+				begin
+					score_ones <= 0;
+					score_tens <= score_tens + 1;
+					if (score_tens == 9)
+					begin
+						score_ones <= 0;
+						score_tens <= 0;
+						score_hundreds <= score_hundreds + 1;
+						if (score_hundreds == 9)
+						begin
+							score_ones <= 9;
+							score_tens <= 9;
+							score_hundreds <= 9;
+						end
+					end
+				end
+			end
+		end
+	endtask
+
+	// Task for checking positions and boundaries for bad blocks
+		// Task for checking positions and boundaries
+	task BAD_POS_CHECK;
+		input [9:0] x;
+		input [9:0] y;
+		input [9:0] sub_x;
+		input [9:0] sub_y;
+		input [3:0] block_movement;
+		begin
+			x <= x - block_movement;
+			if (x <= 150) 
+			begin
+				x <= 820;
+				for (i = 0; i <= 15; i = i + 1)
+				begin
+					if (random == i) y <= 50 + 2 * i;
+				end
+			end
+			
+			sub_x <= x - bird_x;
+			sub_y <= y - bird_y;
+			
+			if ((sub_x >= 0 && sub_x <= 10 && sub_y >= 0 && sub_y <= 10) || (sub_x >= 0 && sub_x <= 10 && sub_y >= 1014 && sub_y <= 1023) 
+				|| (sub_x >= 1015 && sub_x <= 1023 && sub_y >= 0 && sub_y <= 10) || (sub_x >= 1015 && sub_x <= 1023 && sub_y >= 1014 && sub_y <= 1023))
+			begin
+				x <= 820;
+				for (i = 0; i <= 15; i = i + 1)
+				begin
+					if (random == i) y <= 50 + 2 * i;
+				end
+
+				sub_x <= 11;
+				sub_y <= 11;
+
+				if (!(score_ones == 0 && score_tens == 0 && score_hundreds == 0)) // Don't want to go into negative scores 
+				begin
+					score_ones <= score_ones - 1;
+					if (score_ones == 0)
+					begin
+						score_ones <= 9;
+						if (score_tens > 0)
+							score_tens <= score_tens - 1;
+						else if (score_tens == 0)
+						begin
+							if (score_hundreds > 0)
+							begin
+								score_tens <= 9;
+								score_hundreds <= score_hundreds - 1;
+							end
+						end
+					end
+				end
+			end
+		end
+	endtask
+
+	// Common task for each phase
+	task PHASE_MOVEMENT;
+		input [3:0] block_movement;
+		input [4:0] transition_state;
+		begin
+			state_read_ten_secs <= 1'b0;
+			direction_chosen <= 1'b0;
+
+			random <= {random[2:0], feedback};
+
+			if (ten_secs == 1'b1)
+			begin
+				state_read_ten_secs <= 1'b1;
+				state <= transition_state;
+			end
+
+			if(direction == 2'b10)
+			begin // up
+				bird_y<=bird_y-10;
+				if(bird_y<=34)
+					bird_y<=514;
+				direction_chosen <= 1'b1; // Tell the full clk that we moved up and to reset direction back to zero.
+			end
+			else if(direction == 2'b11)
+			begin // down
+				bird_y<=bird_y+10;
+				if(bird_y>=514)
+					bird_y<=34;
+				direction_chosen <= 1'b1; // Tell the full clk that we moved down and reset direction back to zero.
+			end
+
+			BLOCK_POS_CHECK(block_x, block_y, block_sub_x, block_sub_y, block_movement);
+			BAD_POS_CHECK(bad_x, bad_y, bad_sub_x, bad_sub_y, block_movement);
+
+		end
+	endtask
 
 	always@(posedge move_clk, posedge rst) 
 	begin
@@ -155,10 +306,10 @@ module block_controller
 					// block_x <= $urandom_range(700, 600);
 					// block_y <= $urandom_range(505, 30);
 
-					block_sub_x <= -1;
-					block_sub_y <= -6;
-					bad_sub_x <= -1;
-					bad_sub_y <= -6;
+					block_sub_x <= 11;
+					block_sub_y <= 11;
+					bad_sub_x <= 11;
+					bad_sub_y <= 11;
 
 					score_ones <= 0;
 					score_tens <= 0;
@@ -176,293 +327,22 @@ module block_controller
 					*/
 
 					// For the block, we want to choose a random position between
-					// 30 and 505 vertically
-					// 810 and 1010 horizontally
+					// 40 and 450 vertically
 
-					direction_chosen <= 1'b0;
-
-					if (ten_secs == 1'b1)
-					begin
-						state_read_ten_secs <= 1'b1;
-						state <= PHASE2;
-					end
-
-					if(direction == 2'b10)
-					begin // up
-						bird_y<=bird_y-10;
-						if(bird_y<=34)
-							bird_y<=514;
-						direction_chosen <= 1'b1; // Tell the full clk that we moved up and to reset direction back to zero.
-					end
-					else if(direction == 2'b11)
-					begin // down
-						bird_y<=bird_y+10;
-						if(bird_y>=514)
-							bird_y<=34;
-						direction_chosen <= 1'b1; // Tell the full clk that we moved down and reset direction back to zero.
-					end
-
-					block_x <= block_x - 4;
-					if (block_x <= 150) 
-					begin
-						block_x <= 800;
-					end
-
-					bad_x <= bad_x - 4;
-					if (bad_x <= 150)
-					begin
-						bad_x <= 800;
-					end
-
-					block_sub_x <= block_x - bird_x;
-					block_sub_y <= block_y - bird_y;
-
-					if (block_sub_x >= 0 && block_sub_x <= 10 && block_sub_y >= 0 && block_sub_y <= 10)
-					begin
-						block_x <= 700;
-						block_y <= 250;
-
-						block_sub_x <= -1;
-						block_sub_y <= -6;
-
-						score_ones <= score_ones + 1;
-						if (score_ones == 9)
-						begin
-							score_ones <= 0;
-							score_tens <= score_tens + 1;
-							if (score_tens == 9)
-							begin
-								score_ones <= 0;
-								score_tens <= 0;
-								score_hundreds <= score_hundreds + 1;
-							end
-						end
-					end
-
-					bad_sub_x <= bad_x - bird_x;
-					bad_sub_y <= bad_y - bird_y;
-
-					if (bad_sub_x >= 0 && bad_sub_x <= 10 && bad_sub_y >= 0 && bad_sub_y <= 10)
-					begin
-						bad_x <= 750;
-						bad_y <= 320;
-
-						bad_sub_x <= -1;
-						bad_sub_y <= -6;
-
-						if (!(score_ones == 0 && score_tens == 0 && score_hundreds == 0)) // Don't want to go into negative scores 
-						begin
-							score_ones <= score_ones - 1;
-							if (score_ones == 0)
-							begin
-								score_ones <= 9;
-								if (score_tens > 0)
-									score_tens <= score_tens - 1;
-								else if (score_tens == 0)
-								begin
-									if (score_hundreds > 0)
-									begin
-										score_tens <= 9;
-										score_hundreds <= score_hundreds - 1;
-									end
-								end
-							end
-						end
-					end
+					PHASE_MOVEMENT(1, PHASE2);
 
 				end
 
 				PHASE2:
 				// Blocks move faster. This is reached after 10 seconds.
 				begin
-					state_read_ten_secs <= 1'b0;
-					direction_chosen <= 1'b0;
-
-					if (ten_secs == 1'b1)
-					begin
-						state_read_ten_secs <= 1'b1;
-						state <= PHASE3;
-					end
-
-					if(direction == 2'b10)
-					begin // up
-						bird_y<=bird_y-10;
-						if(bird_y<=34)
-							bird_y<=514;
-						direction_chosen <= 1'b1; // Tell the full clk that we moved up and to reset direction back to zero.
-					end
-					else if(direction == 2'b11)
-					begin // down
-						bird_y<=bird_y+10;
-						if(bird_y>=514)
-							bird_y<=34;
-						direction_chosen <= 1'b1; // Tell the full clk that we moved down and reset direction back to zero.
-					end
-
-					block_x <= block_x - 8;
-					if (block_x <= 150) 
-					begin
-						block_x <= 800;
-					end
-
-					bad_x <= bad_x - 8;
-					if (bad_x <= 150)
-					begin
-						bad_x <= 800;
-					end
-
-					block_sub_x <= block_x - bird_x;
-					block_sub_y <= block_y - bird_y;
-
-					if (block_sub_x >= 0 && block_sub_x <= 10 && block_sub_y >= 0 && block_sub_y <= 10)
-					begin
-						block_x <= 700;
-						block_y <= 250;
-
-						block_sub_x <= -1;
-						block_sub_y <= -6;
-
-						score_ones <= score_ones + 1;
-						if (score_ones == 9)
-						begin
-							score_ones <= 0;
-							score_tens <= score_tens + 1;
-							if (score_tens == 9)
-							begin
-								score_ones <= 0;
-								score_tens <= 0;
-								score_hundreds <= score_hundreds + 1;
-							end
-						end
-					end
-
-					bad_sub_x <= bad_x - bird_x;
-					bad_sub_y <= bad_y - bird_y;
-
-					if (bad_sub_x >= 0 && bad_sub_x <= 10 && bad_sub_y >= 0 && bad_sub_y <= 10)
-					begin
-						bad_x <= 750;
-						bad_y <= 320;
-
-						bad_sub_x <= -1;
-						bad_sub_y <= -6;
-
-						if (!(score_ones == 0 && score_tens == 0 && score_hundreds == 0)) // Don't want to go into negative scores 
-						begin
-							score_ones <= score_ones - 1;
-							if (score_ones == 0)
-							begin
-								score_ones <= 9;
-								if (score_tens > 0)
-									score_tens <= score_tens - 1;
-								else if (score_tens == 0)
-								begin
-									if (score_hundreds > 0)
-									begin
-										score_tens <= 9;
-										score_hundreds <= score_hundreds - 1;
-									end
-								end
-							end
-						end
-					end
-
+					PHASE_MOVEMENT(8, PHASE3);
 				end
 
 				PHASE3:
 				// Blocks move faster. This is reached after 20 seconds.
 				begin
-					state_read_ten_secs <= 1'b0;
-					direction_chosen <= 1'b0;
-
-					if (ten_secs == 1'b1)
-					begin
-						state_read_ten_secs <= 1'b1;
-						state <= DONE;
-					end
-
-					if(direction == 2'b10)
-					begin // up
-						bird_y<=bird_y-10;
-						if(bird_y<=34)
-							bird_y<=514;
-						direction_chosen <= 1'b1; // Tell the full clk that we moved up and to reset direction back to zero.
-					end
-					else if(direction == 2'b11)
-					begin // down
-						bird_y<=bird_y+10;
-						if(bird_y>=514)
-							bird_y<=34;
-						direction_chosen <= 1'b1; // Tell the full clk that we moved down and reset direction back to zero.
-					end
-
-					block_x <= block_x - 12;
-					if (block_x <= 150) 
-					begin
-						block_x <= 800;
-					end
-
-					bad_x <= bad_x - 12;
-					if (bad_x <= 150)
-					begin
-						bad_x <= 800;
-					end
-
-					block_sub_x <= block_x - bird_x;
-					block_sub_y <= block_y - bird_y;
-
-					if (block_sub_x >= 0 && block_sub_x <= 10 && block_sub_y >= 0 && block_sub_y <= 10)
-					begin
-						block_x <= 700;
-						block_y <= 250;
-
-						block_sub_x <= -1;
-						block_sub_y <= -6;
-
-						score_ones <= score_ones + 1;
-						if (score_ones == 9)
-						begin
-							score_ones <= 0;
-							score_tens <= score_tens + 1;
-							if (score_tens == 9)
-							begin
-								score_ones <= 0;
-								score_tens <= 0;
-								score_hundreds <= score_hundreds + 1;
-							end
-						end
-					end
-
-					bad_sub_x <= bad_x - bird_x;
-					bad_sub_y <= bad_y - bird_y;
-
-					if (bad_sub_x >= 0 && bad_sub_x <= 10 && bad_sub_y >= 0 && bad_sub_y <= 10)
-					begin
-						bad_x <= 750;
-						bad_y <= 320;
-
-						bad_sub_x <= -1;
-						bad_sub_y <= -6;
-
-						if (!(score_ones == 0 && score_tens == 0 && score_hundreds == 0)) // Don't want to go into negative scores 
-						begin
-							score_ones <= score_ones - 1;
-							if (score_ones == 0)
-							begin
-								score_ones <= 9;
-								if (score_tens > 0)
-									score_tens <= score_tens - 1;
-								else if (score_tens == 0)
-								begin
-									if (score_hundreds > 0)
-									begin
-										score_tens <= 9;
-										score_hundreds <= score_hundreds - 1;
-									end
-								end
-							end
-						end
-					end
+					PHASE_MOVEMENT(12, DONE);
 				end
 
 				DONE:

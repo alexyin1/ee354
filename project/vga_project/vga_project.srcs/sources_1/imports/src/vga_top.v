@@ -66,8 +66,8 @@ module vga_top(
 	reg [26:0] DIV_CLK;
 	wire board_clk;
 
-	ee354_debouncer #(.N_dc(28)) ee354_debouncer_up (.CLK(ClkPort), .RESET(Reset), .PB(BtnU), .SCEN(up));
-	ee354_debouncer #(.N_dc(28)) ee354_debouncer_down (.CLK(ClkPort), .RESET(Reset), .PB(BtnD), .SCEN(down));
+	ee354_debouncer #(.N_dc(28)) ee354_debouncer_up (.CLK(ClkPort), .RESET(Reset), .PB(BtnU), .CCEN(up));
+	ee354_debouncer #(.N_dc(28)) ee354_debouncer_down (.CLK(ClkPort), .RESET(Reset), .PB(BtnD), .CCEN(down));
 	display_controller dc(.clk(ClkPort), .hSync(hSync), .vSync(vSync), .bright(bright), .hCount(hc), .vCount(vc));
 	block_controller sc(.clk(ClkPort), .bright(bright), .rst(Reset), .up(up), .down(down),.Start(Start),.Ack(Ack),.hCount(hc), .vCount(vc), .rgb(rgb), .score_ones(score_ones),
 	.score_tens(score_tens), .score_hundreds(score_hundreds), .Qi(Qi), .Qp1(Qp1), .Qp2(Qp2), .Qp3(Qp3), .Done(Done), .ten_secs(ten_secs) );
