@@ -2,8 +2,8 @@
 # Vivado v2019.2 (64-bit)
 # SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
 # IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
-# Start of session at: Wed Apr 22 04:25:25 2020
-# Process ID: 26508
+# Start of session at: Wed Apr 22 04:40:01 2020
+# Process ID: 23212
 # Current directory: D:/ee354/project/vga_project/vga_project.runs/synth_1
 # Command line: vivado.exe -log vga_top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source vga_top.tcl
 # Log file: D:/ee354/project/vga_project/vga_project.runs/synth_1/vga_top.vds
@@ -16,9 +16,9 @@ Attempting to get a license for feature 'Synthesis' and/or device 'xc7a100t'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a100t'
 INFO: [Device 21-403] Loading part xc7a100tcsg324-1
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 18504 
+INFO: Helper process launched with PID 10272 
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 786.629 ; gain = 234.789
+Starting RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:04 . Memory (MB): peak = 786.430 ; gain = 234.012
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'vga_top' [D:/ee354/project/vga_project/vga_project.srcs/sources_1/imports/src/vga_top.v:24]
 INFO: [Synth 8-6157] synthesizing module 'ee354_debouncer' [D:/ee354/project/vga_project/vga_project.srcs/sources_1/imports/src/ee354_debounce_DPB_SCEN_CCEN_MCEN_r1.v:92]
@@ -83,7 +83,7 @@ WARNING: [Synth 8-3917] design vga_top has port MemWR driven by constant 1
 WARNING: [Synth 8-3917] design vga_top has port RamCS driven by constant 1
 WARNING: [Synth 8-3917] design vga_top has port QuadSpiFlashCS driven by constant 1
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 860.117 ; gain = 308.277
+Finished RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 859.645 ; gain = 307.227
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -96,12 +96,12 @@ Report Check Netlist:
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 860.117 ; gain = 308.277
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:07 ; elapsed = 00:00:06 . Memory (MB): peak = 859.645 ; gain = 307.227
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 860.117 ; gain = 308.277
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:06 . Memory (MB): peak = 859.645 ; gain = 307.227
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.037 . Memory (MB): peak = 860.117 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.028 . Memory (MB): peak = 859.645 ; gain = 0.000
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
@@ -112,26 +112,26 @@ INFO: [Project 1-236] Implementation specific constraints were found while readi
 Resolution: To avoid this warning, move constraints listed in [.Xil/vga_top_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 974.461 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 972.121 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.012 . Memory (MB): peak = 974.461 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.013 . Memory (MB): peak = 972.121 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 974.461 ; gain = 422.621
+Finished Constraint Validation : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 972.121 ; gain = 419.703
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a100tcsg324-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 974.461 ; gain = 422.621
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 972.121 ; gain = 419.703
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 974.461 ; gain = 422.621
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 972.121 ; gain = 419.703
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'ee354_debouncer'
 INFO: [Synth 8-5587] ROM size for "MCEN_count" is below threshold of ROM address width. It will be mapped to LUTs
@@ -172,7 +172,7 @@ INFO: [Synth 8-3354] encoded FSM with state register 'full_clk_state_reg' using 
 ---------------------------------------------------------------------------------------------------
 INFO: [Synth 8-3898] No Re-encoding of one hot register 'state_reg' in module 'block_controller'
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 974.461 ; gain = 422.621
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 972.121 ; gain = 419.703
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -360,7 +360,7 @@ INFO: [Synth 8-3886] merging instance 'sc/bad_y_reg[5][9]' (FDE) to 'sc/bad_y_re
 INFO: [Synth 8-3886] merging instance 'sc/bad_y_reg[5][8]' (FDE) to 'sc/bad_y_reg[5][7]'
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (sc/\bad_y_reg[5][0] )
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:30 ; elapsed = 00:00:31 . Memory (MB): peak = 974.461 ; gain = 422.621
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:29 ; elapsed = 00:00:29 . Memory (MB): peak = 972.121 ; gain = 419.703
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -372,13 +372,13 @@ Report RTL Partitions:
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:38 ; elapsed = 00:00:38 . Memory (MB): peak = 974.461 ; gain = 422.621
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:36 ; elapsed = 00:00:36 . Memory (MB): peak = 972.121 ; gain = 419.703
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:38 ; elapsed = 00:00:39 . Memory (MB): peak = 974.461 ; gain = 422.621
+Finished Timing Optimization : Time (s): cpu = 00:00:36 ; elapsed = 00:00:36 . Memory (MB): peak = 972.121 ; gain = 419.703
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -390,40 +390,40 @@ Report RTL Partitions:
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-3886] merging instance 'sc/bad_y_reg[3][1]' (FDE) to 'sc/bad_y_reg[3][5]'
-INFO: [Synth 8-3886] merging instance 'sc/block_y_reg[4][1]' (FDE) to 'sc/block_y_reg[4][4]'
 INFO: [Synth 8-3886] merging instance 'sc/bad_y_reg[2][1]' (FDE) to 'sc/bad_y_reg[2][4]'
-INFO: [Synth 8-3886] merging instance 'sc/bad_y_reg[5][5]' (FDE) to 'sc/bad_y_reg[5][1]'
+INFO: [Synth 8-3886] merging instance 'sc/block_y_reg[4][1]' (FDE) to 'sc/block_y_reg[4][4]'
 INFO: [Synth 8-3886] merging instance 'sc/bad_y_reg[5][3]' (FDE) to 'sc/bad_y_reg[5][2]'
-INFO: [Synth 8-3333] propagating constant 1 across sequential element (\sc/bad_y_reg[5][1] )
+INFO: [Synth 8-3886] merging instance 'sc/bad_y_reg[5][1]' (FDE) to 'sc/bad_y_reg[5][5]'
+INFO: [Synth 8-3333] propagating constant 1 across sequential element (\sc/bad_y_reg[5][5] )
+INFO: [Synth 8-3886] merging instance 'sc/block_y_reg[3][3]' (FDE) to 'sc/block_y_reg[3][6]'
+INFO: [Synth 8-3886] merging instance 'sc/block_y_reg[3][4]' (FDE) to 'sc/block_y_reg[3][5]'
+INFO: [Synth 8-3333] propagating constant 1 across sequential element (\sc/block_y_reg[3][5] )
 INFO: [Synth 8-3886] merging instance 'sc/block_y_reg[1][2]' (FDE) to 'sc/block_y_reg[1][6]'
 INFO: [Synth 8-3886] merging instance 'sc/block_y_reg[1][4]' (FDE) to 'sc/block_y_reg[1][5]'
 INFO: [Synth 8-3333] propagating constant 1 across sequential element (\sc/block_y_reg[1][5] )
-INFO: [Synth 8-3886] merging instance 'sc/block_y_reg[2][5]' (FDE) to 'sc/block_y_reg[2][1]'
-INFO: [Synth 8-3886] merging instance 'sc/block_y_reg[2][4]' (FDE) to 'sc/block_y_reg[2][1]'
-INFO: [Synth 8-3333] propagating constant 1 across sequential element (\sc/block_y_reg[2][1] )
+INFO: [Synth 8-3886] merging instance 'sc/block_y_reg[2][1]' (FDE) to 'sc/block_y_reg[2][4]'
+INFO: [Synth 8-3886] merging instance 'sc/block_y_reg[2][4]' (FDE) to 'sc/block_y_reg[2][5]'
+INFO: [Synth 8-3333] propagating constant 1 across sequential element (\sc/block_y_reg[2][5] )
 INFO: [Synth 8-3333] propagating constant 1 across sequential element (\sc/bad_y_reg[3][5] )
-INFO: [Synth 8-3886] merging instance 'sc/block_y_reg[4][4]' (FDE) to 'sc/block_y_reg[4][5]'
-INFO: [Synth 8-3333] propagating constant 1 across sequential element (\sc/block_y_reg[4][5] )
-INFO: [Synth 8-3886] merging instance 'sc/block_y_reg[5][3]' (FDE) to 'sc/block_y_reg[5][6]'
-INFO: [Synth 8-3886] merging instance 'sc/block_y_reg[5][2]' (FDE) to 'sc/block_y_reg[5][6]'
-INFO: [Synth 8-3886] merging instance 'sc/block_y_reg[5][4]' (FDE) to 'sc/block_y_reg[5][5]'
-INFO: [Synth 8-3333] propagating constant 1 across sequential element (\sc/block_y_reg[5][5] )
-INFO: [Synth 8-3886] merging instance 'sc/bad_y_reg[4][3]' (FDE) to 'sc/bad_y_reg[4][6]'
-INFO: [Synth 8-3886] merging instance 'sc/bad_y_reg[4][1]' (FDE) to 'sc/bad_y_reg[4][4]'
-INFO: [Synth 8-3886] merging instance 'sc/bad_y_reg[4][2]' (FDE) to 'sc/bad_y_reg[4][6]'
-INFO: [Synth 8-3333] propagating constant 1 across sequential element (\sc/bad_y_reg[4][5] )
-INFO: [Synth 8-3886] merging instance 'sc/block_y_reg[3][6]' (FDE) to 'sc/block_y_reg[3][3]'
-INFO: [Synth 8-3886] merging instance 'sc/block_y_reg[3][5]' (FDE) to 'sc/block_y_reg[3][4]'
-INFO: [Synth 8-3333] propagating constant 1 across sequential element (\sc/block_y_reg[3][4] )
-INFO: [Synth 8-3886] merging instance 'sc/bad_y_reg[2][6]' (FDE) to 'sc/bad_y_reg[2][3]'
-INFO: [Synth 8-3333] propagating constant 1 across sequential element (\sc/bad_y_reg[2][5] )
 INFO: [Synth 8-3886] merging instance 'sc/bad_y_reg[0][1]' (FDE) to 'sc/bad_y_reg[0][4]'
 INFO: [Synth 8-3886] merging instance 'sc/bad_y_reg[0][2]' (FDE) to 'sc/bad_y_reg[0][6]'
 INFO: [Synth 8-3333] propagating constant 1 across sequential element (\sc/bad_y_reg[0][5] )
-INFO: [Synth 8-3886] merging instance 'sc/bad_y_reg[1][5]' (FDE) to 'sc/bad_y_reg[1][1]'
-INFO: [Synth 8-3333] propagating constant 1 across sequential element (\sc/bad_y_reg[1][1] )
+INFO: [Synth 8-3886] merging instance 'sc/bad_y_reg[2][3]' (FDE) to 'sc/bad_y_reg[2][6]'
+INFO: [Synth 8-3333] propagating constant 1 across sequential element (\sc/bad_y_reg[2][5] )
+INFO: [Synth 8-3886] merging instance 'sc/bad_y_reg[1][1]' (FDE) to 'sc/bad_y_reg[1][5]'
+INFO: [Synth 8-3333] propagating constant 1 across sequential element (\sc/bad_y_reg[1][5] )
+INFO: [Synth 8-3886] merging instance 'sc/block_y_reg[4][4]' (FDE) to 'sc/block_y_reg[4][5]'
+INFO: [Synth 8-3333] propagating constant 1 across sequential element (\sc/block_y_reg[4][5] )
+INFO: [Synth 8-3886] merging instance 'sc/block_y_reg[5][3]' (FDE) to 'sc/block_y_reg[5][2]'
+INFO: [Synth 8-3886] merging instance 'sc/block_y_reg[5][2]' (FDE) to 'sc/block_y_reg[5][6]'
+INFO: [Synth 8-3886] merging instance 'sc/block_y_reg[5][4]' (FDE) to 'sc/block_y_reg[5][5]'
+INFO: [Synth 8-3333] propagating constant 1 across sequential element (\sc/block_y_reg[5][5] )
+INFO: [Synth 8-3886] merging instance 'sc/bad_y_reg[4][3]' (FDE) to 'sc/bad_y_reg[4][2]'
+INFO: [Synth 8-3886] merging instance 'sc/bad_y_reg[4][1]' (FDE) to 'sc/bad_y_reg[4][4]'
+INFO: [Synth 8-3886] merging instance 'sc/bad_y_reg[4][2]' (FDE) to 'sc/bad_y_reg[4][6]'
+INFO: [Synth 8-3333] propagating constant 1 across sequential element (\sc/bad_y_reg[4][5] )
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:39 ; elapsed = 00:00:40 . Memory (MB): peak = 1010.898 ; gain = 459.059
+Finished Technology Mapping : Time (s): cpu = 00:00:37 ; elapsed = 00:00:37 . Memory (MB): peak = 1003.738 ; gain = 451.320
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -447,13 +447,13 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:44 ; elapsed = 00:00:45 . Memory (MB): peak = 1015.395 ; gain = 463.555
+Finished IO Insertion : Time (s): cpu = 00:00:42 ; elapsed = 00:00:42 . Memory (MB): peak = 1008.258 ; gain = 455.840
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:44 ; elapsed = 00:00:45 . Memory (MB): peak = 1015.395 ; gain = 463.555
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:42 ; elapsed = 00:00:42 . Memory (MB): peak = 1008.258 ; gain = 455.840
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -472,25 +472,25 @@ Report Check Netlist:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:44 ; elapsed = 00:00:45 . Memory (MB): peak = 1015.395 ; gain = 463.555
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:42 ; elapsed = 00:00:42 . Memory (MB): peak = 1008.258 ; gain = 455.840
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:44 ; elapsed = 00:00:45 . Memory (MB): peak = 1015.395 ; gain = 463.555
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:42 ; elapsed = 00:00:42 . Memory (MB): peak = 1008.258 ; gain = 455.840
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:44 ; elapsed = 00:00:45 . Memory (MB): peak = 1015.395 ; gain = 463.555
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:42 ; elapsed = 00:00:42 . Memory (MB): peak = 1008.258 ; gain = 455.840
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:44 ; elapsed = 00:00:45 . Memory (MB): peak = 1015.395 ; gain = 463.555
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:42 ; elapsed = 00:00:42 . Memory (MB): peak = 1008.258 ; gain = 455.840
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -507,17 +507,17 @@ Report Cell Usage:
 |      |Cell   |Count |
 +------+-------+------+
 |1     |BUFG   |     2|
-|2     |CARRY4 |   251|
-|3     |LUT1   |    78|
-|4     |LUT2   |   353|
-|5     |LUT3   |   370|
-|6     |LUT4   |   191|
-|7     |LUT5   |   326|
-|8     |LUT6   |   530|
+|2     |CARRY4 |   253|
+|3     |LUT1   |    74|
+|4     |LUT2   |   349|
+|5     |LUT3   |   256|
+|6     |LUT4   |   197|
+|7     |LUT5   |   260|
+|8     |LUT6   |   682|
 |9     |FDCE   |    64|
 |10    |FDPE   |     4|
-|11    |FDRE   |   519|
-|12    |FDSE   |    12|
+|11    |FDRE   |   497|
+|12    |FDSE   |    34|
 |13    |IBUF   |     6|
 |14    |OBUF   |    34|
 +------+-------+------+
@@ -526,35 +526,35 @@ Report Instance Areas:
 +------+-----------------------+-------------------+------+
 |      |Instance               |Module             |Cells |
 +------+-----------------------+-------------------+------+
-|1     |top                    |                   |  2740|
-|2     |  dc                   |display_controller |   393|
+|1     |top                    |                   |  2712|
+|2     |  dc                   |display_controller |   394|
 |3     |  ee354_debouncer_down |ee354_debouncer    |    70|
 |4     |  ee354_debouncer_up   |ee354_debouncer_0  |    71|
-|5     |  sc                   |block_controller   |  2131|
+|5     |  sc                   |block_controller   |  2102|
 +------+-----------------------+-------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:44 ; elapsed = 00:00:45 . Memory (MB): peak = 1015.395 ; gain = 463.555
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:42 ; elapsed = 00:00:42 . Memory (MB): peak = 1008.258 ; gain = 455.840
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 4 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:35 ; elapsed = 00:00:42 . Memory (MB): peak = 1015.395 ; gain = 349.211
-Synthesis Optimization Complete : Time (s): cpu = 00:00:44 ; elapsed = 00:00:45 . Memory (MB): peak = 1015.395 ; gain = 463.555
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:33 ; elapsed = 00:00:40 . Memory (MB): peak = 1008.258 ; gain = 343.363
+Synthesis Optimization Complete : Time (s): cpu = 00:00:42 ; elapsed = 00:00:42 . Memory (MB): peak = 1008.258 ; gain = 455.840
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.041 . Memory (MB): peak = 1027.457 ; gain = 0.000
-INFO: [Netlist 29-17] Analyzing 251 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.036 . Memory (MB): peak = 1014.438 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 253 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1027.457 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1022.250 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
 INFO: [Common 17-83] Releasing license: Synthesis
 117 Infos, 26 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:50 ; elapsed = 00:00:51 . Memory (MB): peak = 1027.457 ; gain = 728.547
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1027.457 ; gain = 0.000
+synth_design: Time (s): cpu = 00:00:46 ; elapsed = 00:00:48 . Memory (MB): peak = 1022.250 ; gain = 724.344
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1022.250 ; gain = 0.000
 WARNING: [Constraints 18-5210] No constraints selected for write.
 Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
 INFO: [Common 17-1381] The checkpoint 'D:/ee354/project/vga_project/vga_project.runs/synth_1/vga_top.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file vga_top_utilization_synth.rpt -pb vga_top_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Wed Apr 22 04:26:19 2020...
+INFO: [Common 17-206] Exiting Vivado at Wed Apr 22 04:40:51 2020...

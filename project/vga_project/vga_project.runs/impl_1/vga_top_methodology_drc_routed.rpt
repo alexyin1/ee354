@@ -1,7 +1,7 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-| Date         : Wed Apr 22 04:27:35 2020
+| Date         : Wed Apr 22 04:42:03 2020
 | Host         : DESKTOP-BBSH87J running 64-bit major release  (build 9200)
 | Command      : report_methodology -file vga_top_methodology_drc_routed.rpt -pb vga_top_methodology_drc_routed.pb -rpx vga_top_methodology_drc_routed.rpx
 | Design       : vga_top
@@ -1040,12 +1040,12 @@ Related violations: <none>
 
 TIMING-17#202 Critical Warning
 Non-clocked sequential cell  
-The clock pin sc/bad_y_reg[2][3]/C is not reached by a timing clock
+The clock pin sc/bad_y_reg[2][4]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#203 Critical Warning
 Non-clocked sequential cell  
-The clock pin sc/bad_y_reg[2][4]/C is not reached by a timing clock
+The clock pin sc/bad_y_reg[2][6]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#204 Critical Warning
@@ -2085,7 +2085,7 @@ Related violations: <none>
 
 TIMING-17#411 Critical Warning
 Non-clocked sequential cell  
-The clock pin sc/block_y_reg[3][3]/C is not reached by a timing clock
+The clock pin sc/block_y_reg[3][6]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#412 Critical Warning

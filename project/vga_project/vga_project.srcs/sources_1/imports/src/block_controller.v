@@ -153,7 +153,7 @@ module block_controller
 			block_x[index] <= block_x[index] - block_movement;
 			if (block_x[index] <= 150) 
 			begin
-				block_x[index] <= 750; // NORMAL IS 820 to be right outside the screen!
+				block_x[index] <= 450 + 50 * random; // NORMAL IS 820 to be right outside the screen!
 				block_y[index] <= 50 + 2 * random;
 			end
 			
@@ -165,7 +165,7 @@ module block_controller
 				|| (block_sub_x[index] >= 1015 && block_sub_x[index] <= 1023 && block_sub_y[index] >= 0 && block_sub_y[index] <= 10) 
 				|| (block_sub_x[index] >= 1015 && block_sub_x[index] <= 1023 && block_sub_y[index] >= 1014 && block_sub_y[index] <= 1023))
 			begin
-				block_x[index] <= 750; // NORM IS 820
+				block_x[index] <= 450 + 50 * random; // NORM IS 820
 				block_y[index] <= 50 + 2 * random;
 
 				block_sub_x[index] <= 11;
@@ -201,7 +201,7 @@ module block_controller
 			bad_x[index] <= bad_x[index] - block_movement;
 			if (bad_x[index] <= 150) 
 			begin
-				bad_x[index] <= 750; // NORMAL IS 820 to be right outside the screen!
+				bad_x[index] <= 500+ 33 * random; // NORMAL IS 820 to be right outside the screen!
 				bad_y[index] <= 50 + 2 * random;
 			end
 			
@@ -213,7 +213,7 @@ module block_controller
 				|| (bad_sub_x[index] >= 1015 && bad_sub_x[index] <= 1023 && bad_sub_y[index] >= 0 && bad_sub_y[index] <= 10) 
 				|| (bad_sub_x[index] >= 1015 && bad_sub_x[index] <= 1023 && bad_sub_y[index] >= 1014 && bad_sub_y[index] <= 1023))
 			begin
-				bad_x[index] <= 750; // NORM IS 820!
+				bad_x[index] <= 500 + 33 * random; // NORM IS 820!
 				bad_y[index] <= 50 + 2 * random;
 
 				bad_sub_x[index] <= 11;
@@ -324,9 +324,9 @@ module block_controller
 
 					for (i = 0; i < 6; i = i + 1)
 					begin
-						block_x[i] <= 700; // TODO: CHANGE TO MAKE THIS VARIABLE
+						block_x[i] <= 450 + 50 * i; // TODO: CHANGE TO MAKE THIS VARIABLE
 						block_y[i] <= 50 + 66 * i;
-						bad_x[i] <= 700; // TODO: CHANGE TO MAKE THIS VARIABLE
+						bad_x[i] <= 500 + 33 * i; // TODO: CHANGE TO MAKE THIS VARIABLE
 						bad_y[i] <= 100 + 66 * i;
 						block_sub_x[i] <= 0;
 						block_sub_y[i] <= 0;
