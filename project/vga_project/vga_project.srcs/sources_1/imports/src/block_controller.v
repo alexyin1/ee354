@@ -50,20 +50,21 @@ module block_controller
 
 	wire move_clk;
 	assign move_clk=DIV_CLK[19];
-	wire bird_fill;
-	wire block_fill;
 
 	reg [27:0] timer_count;
 	reg [3:0] check_ten_secs;
 	
 	reg [9:0] bird_x, bird_y;
-	reg [9:0] block_x, block_y;
-	reg [9:0] bad_x, bad_y;
-	reg [9:0] block_sub_x, block_sub_y;
-	reg [9:0] bad_sub_x, bad_sub_y;
+	reg [9:0] block_x[5:0], block_y[5:0];
+	reg [9:0] bad_x[5:0], bad_y[5:0];
+	reg [9:0] block_sub_x[5:0], block_sub_y[5:0];
+	reg [9:0] bad_sub_x[5:0], bad_sub_y[5:0];
 
 	wire feedback;
 	assign feedback = random[0] ^ random[3];
+
+	wire block_fill[6:0];
+	wire bad_fill[6:0];
 
 	reg direction_chosen, state_read_ten_secs;
 	
@@ -92,12 +93,33 @@ module block_controller
 	
 	/*when outputting the rgb value in an always block like this, make sure to include the if(~bright) statement, as this ensures the monitor 
 	will output some data to every pixel and not just the images you are trying to display*/
-	always@ (*) begin
-    	if(bird_fill )
+	always@ (*) 
+	begin
+		if(bird_fill)
 			rgb = BLUE;
-		else if (block_fill)
+		else if (block_fill[0])
 			rgb = GREEN;
-		else if (bad_fill)
+		else if (bad_fill[0])
+			rgb = RED;
+		else if (block_fill[1])
+			rgb = GREEN;
+		else if (bad_fill[1])
+			rgb = RED;
+		else if (block_fill[2])
+			rgb = GREEN;
+		else if (bad_fill[2])
+			rgb = RED;
+		else if (block_fill[3])
+			rgb = GREEN;
+		else if (bad_fill[3])
+			rgb = RED;
+		else if (block_fill[4])
+			rgb = GREEN;
+		else if (bad_fill[4])
+			rgb = RED;
+		else if (block_fill[5])
+			rgb = GREEN;
+		else if (bad_fill[5])
 			rgb = RED;
 		else if (~bright)
 			rgb = BLACK;
@@ -110,42 +132,44 @@ module block_controller
 	end
 	
 	//the +-5 for the positions give the dimension of the block (i.e. it will be 10x10 pixels)
+
+	genvar j;
+	generate
+		for (j = 0; j < 6; j = j + 1)
+		begin
+			assign block_fill[j] = vCount>=(block_y[j]-5) && vCount<=(block_y[j]+5) && hCount>=(block_x[j]-5) && hCount<=(block_x[j]+5);
+			assign bad_fill[j] = vCount>=(bad_y[j]-5) && vCount<=(bad_y[j]+5) && hCount>=(bad_x[j]-5) && hCount<=(bad_x[j]+5);
+		end
+	endgenerate
+
 	assign bird_fill=vCount>=(bird_y-5) && vCount<=(bird_y+5) && hCount>=(bird_x-5) && hCount<=(bird_x+5);
-	assign block_fill = vCount>=(block_y-5) && vCount<=(block_y+5) && hCount>=(block_x-5) && hCount<=(block_x+5);
-	assign bad_fill = vCount>=(bad_y-5) && vCount<=(bad_y+5) && hCount>=(bad_x-5) && hCount<=(bad_x+5);
+
 
 	// Task for checking positions and boundaries for blocks
 	task BLOCK_POS_CHECK;
-		input [9:0] x;
-		input [9:0] y;
-		input [9:0] sub_x;
-		input [9:0] sub_y;
+		input [2:0] index;
 		input [3:0] block_movement;
 		begin
-			x <= x - block_movement;
-			if (x <= 150) 
+			block_x[index] <= block_x[index] - block_movement;
+			if (block_x[index] <= 150) 
 			begin
-				x <= 820;
-				for (i = 0; i <= 15; i = i + 1)
-				begin
-					if (random == i) y <= 50 + 2 * i;
-				end
+				block_x[index] <= 750; // NORMAL IS 820 to be right outside the screen!
+				block_y[index] <= 50 + 2 * random;
 			end
 			
-			sub_x <= x - bird_x;
-			sub_y <= y - bird_y;
+			block_sub_x[index] <= block_sub_x[index] - bird_x;
+			block_sub_y[index] <= block_sub_y[index] - bird_y;
 			
-			if ((sub_x >= 0 && sub_x <= 10 && sub_y >= 0 && sub_y <= 10) || (sub_x >= 0 && sub_x <= 10 && sub_y >= 1014 && sub_y <= 1023) 
-				|| (sub_x >= 1015 && sub_x <= 1023 && sub_y >= 0 && sub_y <= 10) || (sub_x >= 1015 && sub_x <= 1023 && sub_y >= 1014 && sub_y <= 1023))
+			if ((block_sub_x[index] >= 0 && block_sub_x[index] <= 10 && block_sub_y[index] >= 0 && block_sub_y[index] <= 10) 
+				|| (block_sub_x[index] >= 0 && block_sub_x[index] <= 10 && block_sub_y[index] >= 1014 && block_sub_y[index] <= 1023) 
+				|| (block_sub_x[index] >= 1015 && block_sub_x[index] <= 1023 && block_sub_y[index] >= 0 && block_sub_y[index] <= 10) 
+				|| (block_sub_x[index] >= 1015 && block_sub_x[index] <= 1023 && block_sub_y[index] >= 1014 && block_sub_y[index] <= 1023))
 			begin
-				x <= 820;
-				for (i = 0; i <= 15; i = i + 1)
-				begin
-					if (random == i) y <= 50 + 2 * i;
-				end
+				block_x[index] <= 750; // NORM IS 820
+				block_y[index] <= 50 + 2 * random;
 
-				sub_x <= 11;
-				sub_y <= 11;
+				block_sub_x[index] <= 11;
+				block_sub_y[index] <= 11;
 
 				score_ones <= score_ones + 1;
 				if (score_ones == 9)
@@ -170,54 +194,46 @@ module block_controller
 	endtask
 
 	// Task for checking positions and boundaries for bad blocks
-		// Task for checking positions and boundaries
 	task BAD_POS_CHECK;
-		input [9:0] x;
-		input [9:0] y;
-		input [9:0] sub_x;
-		input [9:0] sub_y;
-		input [3:0] block_movement;
+		input [2:0] index;
+        input [3:0] block_movement;
 		begin
-			x <= x - block_movement;
-			if (x <= 150) 
+			bad_x[index] <= bad_x[index] - block_movement;
+			if (bad_x[index] <= 150) 
 			begin
-				x <= 820;
-				for (i = 0; i <= 15; i = i + 1)
-				begin
-					if (random == i) y <= 50 + 2 * i;
-				end
+				bad_x[index] <= 750; // NORMAL IS 820 to be right outside the screen!
+				bad_y[index] <= 50 + 2 * random;
 			end
 			
-			sub_x <= x - bird_x;
-			sub_y <= y - bird_y;
+			bad_sub_x[index] <= bad_sub_x[index] - bird_x;
+			bad_sub_y[index] <= bad_sub_y[index] - bird_y;
 			
-			if ((sub_x >= 0 && sub_x <= 10 && sub_y >= 0 && sub_y <= 10) || (sub_x >= 0 && sub_x <= 10 && sub_y >= 1014 && sub_y <= 1023) 
-				|| (sub_x >= 1015 && sub_x <= 1023 && sub_y >= 0 && sub_y <= 10) || (sub_x >= 1015 && sub_x <= 1023 && sub_y >= 1014 && sub_y <= 1023))
+			if ((bad_sub_x[index] >= 0 && bad_sub_x[index] <= 10 && bad_sub_y[index] >= 0 && bad_sub_y[index] <= 10) 
+				|| (bad_sub_x[index] >= 0 && bad_sub_x[index] <= 10 && bad_sub_y[index] >= 1014 && bad_sub_y[index] <= 1023) 
+				|| (bad_sub_x[index] >= 1015 && bad_sub_x[index] <= 1023 && bad_sub_y[index] >= 0 && bad_sub_y[index] <= 10) 
+				|| (bad_sub_x[index] >= 1015 && bad_sub_x[index] <= 1023 && bad_sub_y[index] >= 1014 && bad_sub_y[index] <= 1023))
 			begin
-				x <= 820;
-				for (i = 0; i <= 15; i = i + 1)
-				begin
-					if (random == i) y <= 50 + 2 * i;
-				end
+				bad_x[index] <= 750; // NORM IS 820!
+				bad_y[index] <= 50 + 2 * random;
 
-				sub_x <= 11;
-				sub_y <= 11;
+				bad_sub_x[index] <= 11;
+				bad_sub_y[index] <= 11;
 
-				if (!(score_ones == 0 && score_tens == 0 && score_hundreds == 0)) // Don't want to go into negative scores 
+				score_ones <= score_ones + 1;
+				if (score_ones == 9)
 				begin
-					score_ones <= score_ones - 1;
-					if (score_ones == 0)
+					score_ones <= 0;
+					score_tens <= score_tens + 1;
+					if (score_tens == 9)
 					begin
-						score_ones <= 9;
-						if (score_tens > 0)
-							score_tens <= score_tens - 1;
-						else if (score_tens == 0)
+						score_ones <= 0;
+						score_tens <= 0;
+						score_hundreds <= score_hundreds + 1;
+						if (score_hundreds == 9)
 						begin
-							if (score_hundreds > 0)
-							begin
-								score_tens <= 9;
-								score_hundreds <= score_hundreds - 1;
-							end
+							score_ones <= 9;
+							score_tens <= 9;
+							score_hundreds <= 9;
 						end
 					end
 				end
@@ -256,8 +272,11 @@ module block_controller
 				direction_chosen <= 1'b1; // Tell the full clk that we moved down and reset direction back to zero.
 			end
 
-			BLOCK_POS_CHECK(block_x, block_y, block_sub_x, block_sub_y, block_movement);
-			BAD_POS_CHECK(bad_x, bad_y, bad_sub_x, bad_sub_y, block_movement);
+			for (i = 0; i < 6; i = i + 1)
+				begin
+					BLOCK_POS_CHECK(i, block_movement);
+					BAD_POS_CHECK(i, block_movement);
+				end
 
 		end
 	endtask
@@ -269,19 +288,20 @@ module block_controller
 			state <= INITIAL;
 			bird_x <= 10'bXXXXXXXXXX;
 			bird_y <= 10'bXXXXXXXXXX;
-			block_x <= 10'bXXXXXXXXXX;
-			block_y <= 10'bXXXXXXXXXX;
-			block_sub_x <= 10'bXXXXXXXXXX;
-			block_sub_y <= 10'bXXXXXXXXXX;
-			bad_x <= 10'bXXXXXXXXXX;
-			bad_y <= 10'bXXXXXXXXXX;
-			bad_sub_x <= 10'bXXXXXXXXXX;
-			bad_sub_y <= 10'bXXXXXXXXXX;
 			score_ones <= 4'bXXXX;
 			score_tens <= 4'bXXXX;
 			score_hundreds <= 4'bXXXX;
 			direction_chosen <= 1'bX;
 			state_read_ten_secs <= 1'bX;
+			for (i = 0; i < 6; i = i + 1)
+				begin
+					block_x[i] <= 10'bXXXXXXXXXX;
+					block_y[i] <= 10'bXXXXXXXXXX;
+					bad_x[i] <= 10'bXXXXXXXXXX;
+					bad_y[i] <= 10'bXXXXXXXXXX;
+					block_sub_x[i] <= 10'bXXXXXXXXXX;
+					block_sub_y[i] <= 10'bXXXXXXXXXX;
+				end
 		end
 		else 
 		begin
@@ -296,26 +316,21 @@ module block_controller
 					bird_x<=200;
 					bird_y<=250;
 
-					block_x <= 700;
-					block_y <= 250;
-
-					bad_x <= 750;
-					bad_y <= 320;
-
-					// This only works for testbench I think... then how can we produce random positions for the blocks to be in?
-					// block_x <= $urandom_range(700, 600);
-					// block_y <= $urandom_range(505, 30);
-
-					block_sub_x <= 11;
-					block_sub_y <= 11;
-					bad_sub_x <= 11;
-					bad_sub_y <= 11;
-
 					score_ones <= 0;
 					score_tens <= 0;
 					score_hundreds <= 0;
 					direction_chosen <= 1'b0;
 					state_read_ten_secs <= 1'b0;
+
+					for (i = 0; i < 6; i = i + 1)
+					begin
+						block_x[i] <= 700; // TODO: CHANGE TO MAKE THIS VARIABLE
+						block_y[i] <= 50 + 66 * i;
+						bad_x[i] <= 700; // TODO: CHANGE TO MAKE THIS VARIABLE
+						bad_y[i] <= 100 + 66 * i;
+						block_sub_x[i] <= 0;
+						block_sub_y[i] <= 0;
+					end
 				end
 
 				PHASE1:
@@ -327,7 +342,7 @@ module block_controller
 					*/
 
 					// For the block, we want to choose a random position between
-					// 40 and 450 vertically
+					// 50 and 450 vertically
 
 					PHASE_MOVEMENT(1, PHASE2);
 

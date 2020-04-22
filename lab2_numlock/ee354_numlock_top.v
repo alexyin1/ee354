@@ -62,7 +62,7 @@ module ee354_numlock_top (
 	wire 			Unlock;	
 	reg [3:0] 		state_num;
 	reg [3:0] 		state_sum;
-	wire [3:0] 		selected_state;
+	wire [3:0] 		selected_state;w
 	reg 			hot1_state_error;	
 	reg 			selected_state_value;	
 	reg [3:0]		SSD;
