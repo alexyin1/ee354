@@ -13,5 +13,5 @@ vivado.jou
 
 # Demo #2 ignores
 vga_moving_block.cache/
-vga_moving_block.hw
+vga_moving_block.hw/
 vga_moving_block.sim/
