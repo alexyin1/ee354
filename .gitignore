@@ -7,6 +7,7 @@ vga_project.sim/
 vga_demo.hw/
 vga_demo.cache/
 vga_demo.sim/
+vga_demo.ip_user_files/
 vivado.log
 vivado_pid3988.str
 vivado.jou
@@ -15,3 +16,5 @@ vivado.jou
 vga_moving_block.cache/
 vga_moving_block.hw/
 vga_moving_block.sim/
+
+.Xil/
