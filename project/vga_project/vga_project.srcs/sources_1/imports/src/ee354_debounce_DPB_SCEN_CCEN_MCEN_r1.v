@@ -180,7 +180,7 @@ always @ (posedge CLK, posedge RESET)
 				           begin
 							state <= CCR;
 						   end	
-				         else if (debounce_count[N_dc-3])// for N_dc of 28, it is debounce_count[27], i.e T = 1.342 sec for f = 100MHz
+				         else if (debounce_count[N_dc-4])// for N_dc of 28, it is debounce_count[27], i.e T = 1.342 sec for f = 100MHz
 				           begin
 						    state <= MCEN_st;
 						   end

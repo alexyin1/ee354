@@ -93,8 +93,11 @@ module vga_top(
 	assign {Ld2, Ld1, Ld0} = {Start, Ack, Reset};
 
 	// SSDs
-	assign SSD5 = {1'b0, 1'b0, 1'b0, Done};
-	assign SSD4 = {Qp3, Qp2, Qp1, Qi};
+	assign SSD7 = {1'b0, 1'b0, 1'b0, Done};
+	assign SSD6 = {1'b0, 1'b0, 1'b0, Qp3};
+	assign SSD5 = {1'b0, 1'b0, 1'b0, Qp2};
+	assign SSD4 = {1'b0, 1'b0, 1'b0, Qp1};
+	assign SSD3 = {1'b0, 1'b0, 1'b0, Qi};
 	assign SSD2 = score_hundreds;
 	assign SSD1 = score_tens;
 	assign SSD0 = score_ones;
@@ -105,7 +108,7 @@ module vga_top(
 	assign An1	= !(~(ssdscan_clk[2]) && ~(ssdscan_clk[1]) &&  (ssdscan_clk[0]));  // when ssdscan_clk = 001
 	assign An2	= !(~(ssdscan_clk[2]) &&  (ssdscan_clk[1]) && ~(ssdscan_clk[0]));  // when ssdscan_clk = 010
 	assign An3	= !(~(ssdscan_clk[2]) &&  (ssdscan_clk[1]) &&  (ssdscan_clk[0]));  // when ssdscan_clk = 011
-	assign An4	= !( (ssdscan_clk[2]) &&  (ssdscan_clk[1]) &&  (ssdscan_clk[0]));  // when ssdscan_clk = 100
+	assign An4	= !( (ssdscan_clk[2]) && ~(ssdscan_clk[1]) && ~(ssdscan_clk[0]));  // when ssdscan_clk = 100
 	assign An5	= !( (ssdscan_clk[2]) && ~(ssdscan_clk[1]) &&  (ssdscan_clk[0]));  // when ssdscan_clk = 101
 	assign An6	= !( (ssdscan_clk[2]) &&  (ssdscan_clk[1]) && ~(ssdscan_clk[0]));  // when ssdscan_clk = 110
 	assign An7	= !( (ssdscan_clk[2]) &&  (ssdscan_clk[1]) &&  (ssdscan_clk[0]));  // when ssdscan_clk = 111
