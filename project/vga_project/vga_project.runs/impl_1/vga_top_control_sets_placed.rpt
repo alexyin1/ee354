@@ -1,7 +1,7 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-| Date         : Thu Apr 23 02:29:57 2020
+| Date         : Tue Apr 28 18:46:56 2020
 | Host         : DESKTOP-BBSH87J running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file vga_top_control_sets_placed.rpt
 | Design       : vga_top
@@ -58,12 +58,12 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |               8 |            8 |
+| No           | No                    | No                     |               8 |            6 |
 | No           | No                    | Yes                    |              40 |           10 |
-| No           | Yes                   | No                     |              10 |            4 |
-| Yes          | No                    | No                     |             181 |          128 |
-| Yes          | No                    | Yes                    |              28 |           13 |
-| Yes          | Yes                   | No                     |             418 |          164 |
+| No           | Yes                   | No                     |              10 |            3 |
+| Yes          | No                    | No                     |             181 |          122 |
+| Yes          | No                    | Yes                    |              28 |           11 |
+| Yes          | Yes                   | No                     |             418 |          153 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
@@ -73,62 +73,62 @@ Table of Contents
 +--------------------+-----------------------------------------------------+----------------------------------------------------+------------------+----------------+
 |    Clock Signal    |                    Enable Signal                    |                  Set/Reset Signal                  | Slice Load Count | Bel Load Count |
 +--------------------+-----------------------------------------------------+----------------------------------------------------+------------------+----------------+
-|  ClkPort_IBUF_BUFG | ee354_debouncer_up/debounce_count                   |                                                    |                1 |              1 |
-|  ClkPort_IBUF_BUFG | ee354_debouncer_down/debounce_count                 |                                                    |                1 |              1 |
 |  dc/pulse          |                                                     |                                                    |                1 |              1 |
 |  dc/clk            |                                                     |                                                    |                1 |              1 |
+|  ClkPort_IBUF_BUFG | ee354_debouncer_up/debounce_count                   |                                                    |                1 |              1 |
+|  ClkPort_IBUF_BUFG | ee354_debouncer_down/debounce_count                 |                                                    |                1 |              1 |
 |  move_clk          |                                                     |                                                    |                2 |              2 |
-|  move_clk          | sc/score_hundreds[3]_i_1_n_0                        | sc/Qi                                              |                4 |              4 |
-|  move_clk          | sc/block_y[5][8]_i_1_n_0                            |                                                    |                3 |              4 |
+|  move_clk          | sc/score_ones[3]_i_1_n_0                            | sc/state_reg[4]_0[0]                               |                3 |              4 |
+|  ClkPort_IBUF_BUFG |                                                     |                                                    |                2 |              4 |
+|  move_clk          | sc/score_tens[3]_i_1_n_0                            |                                                    |                2 |              4 |
+|  move_clk          | sc/score_hundreds[3]_i_1_n_0                        | sc/state_reg[4]_0[0]                               |                3 |              4 |
 |  ClkPort_IBUF_BUFG | sc/check_ten_secs0                                  |                                                    |                1 |              4 |
-|  ClkPort_IBUF_BUFG | sc/random[3]_i_1_n_0                                |                                                    |                2 |              4 |
-|  move_clk          | sc/score_tens[3]_i_1_n_0                            |                                                    |                4 |              4 |
-|  ClkPort_IBUF_BUFG |                                                     |                                                    |                4 |              4 |
-|  move_clk          | sc/bad_y[4][7]_i_1_n_0                              | sc/Qi                                              |                4 |              4 |
+|  move_clk          | sc/block_y[5][8]_i_1_n_0                            |                                                    |                4 |              4 |
 |  ClkPort_IBUF_BUFG | ee354_debouncer_down/MCEN_count                     | ee354_debouncer_down/MCEN_count[3]_i_1__0_n_0      |                1 |              4 |
-|  move_clk          | sc/block_y[2][8]_i_1_n_0                            |                                                    |                3 |              4 |
+|  ClkPort_IBUF_BUFG | sc/random[3]_i_1_n_0                                |                                                    |                1 |              4 |
 |  ClkPort_IBUF_BUFG | ee354_debouncer_up/MCEN_count                       | ee354_debouncer_up/MCEN_count[3]_i_1_n_0           |                1 |              4 |
-|  move_clk          | sc/bad_y[5][7]_i_1_n_0                              | sc/Qi                                              |                4 |              4 |
-|  move_clk          | sc/block_y[3][8]_i_1_n_0                            |                                                    |                3 |              4 |
-|  move_clk          | sc/block_y                                          |                                                    |                1 |              4 |
-|  move_clk          | sc/score_ones[3]_i_1_n_0                            | sc/Qi                                              |                4 |              4 |
+|  move_clk          | sc/block_y                                          |                                                    |                4 |              4 |
+|  move_clk          | sc/bad_y[4][7]_i_1_n_0                              | sc/state_reg[4]_0[0]                               |                2 |              4 |
+|  move_clk          | sc/block_y[3][8]_i_1_n_0                            |                                                    |                4 |              4 |
+|  move_clk          | sc/block_y[2][8]_i_1_n_0                            |                                                    |                3 |              4 |
+|  move_clk          | sc/bad_y[5][7]_i_1_n_0                              | sc/state_reg[4]_0[0]                               |                2 |              4 |
 |  move_clk          | sc/bad_y[4][7]_i_1_n_0                              |                                                    |                3 |              5 |
-|  ClkPort_IBUF_BUFG | sc/FSM_onehot_full_clk_state[2]_i_1_n_0             | BtnC_IBUF                                          |                2 |              5 |
-|  move_clk          | sc/block_y                                          | sc/Qi                                              |                3 |              5 |
-|  move_clk          | sc/block_y[5][8]_i_1_n_0                            | sc/Qi                                              |                5 |              5 |
-|  move_clk          | sc/block_y[2][8]_i_1_n_0                            | sc/Qi                                              |                3 |              5 |
-|  move_clk          | sc/bad_y[5][7]_i_1_n_0                              |                                                    |                4 |              5 |
-|  move_clk          | sc/state                                            | BtnC_IBUF                                          |                4 |              5 |
-|  move_clk          | sc/block_y[3][8]_i_1_n_0                            | sc/Qi                                              |                3 |              5 |
-|  move_clk          | sc/block_y[1][7]_i_1_n_0                            | sc/Qi                                              |                6 |              8 |
-|  move_clk          | sc/block_y[4][7]_i_2_n_0                            | sc/block_y[4][7]_i_1_n_0                           |                3 |              8 |
+|  ClkPort_IBUF_BUFG | sc/FSM_onehot_full_clk_state[2]_i_1_n_0             | Ld6_OBUF                                           |                1 |              5 |
+|  move_clk          | sc/block_y[5][8]_i_1_n_0                            | sc/state_reg[4]_0[0]                               |                3 |              5 |
+|  move_clk          | sc/block_y                                          | sc/state_reg[4]_0[0]                               |                5 |              5 |
+|  move_clk          | sc/state                                            | Ld6_OBUF                                           |                3 |              5 |
+|  move_clk          | sc/block_y[3][8]_i_1_n_0                            | sc/state_reg[4]_0[0]                               |                2 |              5 |
+|  move_clk          | sc/block_y[2][8]_i_1_n_0                            | sc/state_reg[4]_0[0]                               |                2 |              5 |
+|  move_clk          | sc/bad_y[5][7]_i_1_n_0                              |                                                    |                1 |              5 |
+|  move_clk          | sc/block_y[4][7]_i_2_n_0                            | sc/block_y[4][7]_i_1_n_0                           |                2 |              8 |
+|  move_clk          | sc/block_y[1][7]_i_1_n_0                            | sc/state_reg[4]_0[0]                               |                5 |              8 |
+|  move_clk          | sc/bad_y[1][8]_i_1_n_0                              |                                                    |                4 |              9 |
 |  move_clk          | sc/bad_y                                            |                                                    |                4 |              9 |
-|  ClkPort_IBUF_BUFG | ee354_debouncer_down/FSM_onehot_state[8]_i_1__0_n_0 | BtnC_IBUF                                          |                3 |              9 |
-|  ClkPort_IBUF_BUFG | ee354_debouncer_up/FSM_onehot_state[8]_i_1_n_0      | BtnC_IBUF                                          |                4 |              9 |
-|  move_clk          | sc/bad_y[1][8]_i_1_n_0                              |                                                    |                8 |              9 |
-|  move_clk          | sc/bad_y[3][8]_i_1_n_0                              |                                                    |                3 |              9 |
-|  move_clk          | sc/bad_y[2][8]_i_1_n_0                              |                                                    |                5 |              9 |
-|  move_clk          | sc/bird_y                                           |                                                    |                4 |              9 |
-|  dc/clk            | dc/hCount[9]_i_1_n_0                                | dc/vCount[9]_i_1_n_0                               |                3 |             10 |
-|  dc/clk            |                                                     | dc/hCount[9]_i_1_n_0                               |                4 |             10 |
+|  move_clk          | sc/bad_y[3][8]_i_1_n_0                              |                                                    |                5 |              9 |
+|  move_clk          | sc/bad_y[2][8]_i_1_n_0                              |                                                    |                4 |              9 |
+|  ClkPort_IBUF_BUFG | ee354_debouncer_up/FSM_onehot_state[8]_i_1_n_0      | Ld6_OBUF                                           |                3 |              9 |
+|  ClkPort_IBUF_BUFG | ee354_debouncer_down/FSM_onehot_state[8]_i_1__0_n_0 | Ld6_OBUF                                           |                4 |              9 |
+|  move_clk          | sc/bird_y                                           |                                                    |                5 |              9 |
+|  dc/clk            |                                                     | dc/hCount[9]_i_1_n_0                               |                3 |             10 |
+|  dc/clk            | dc/hCount[9]_i_1_n_0                                | dc/vCount[9]_i_1_n_0                               |                4 |             10 |
+|  move_clk          | sc/bad_x[1][8]_i_1_n_0                              | sc/block_sub_y[5][9]_i_1_n_0                       |                6 |             20 |
 |  move_clk          | sc/bad_x[1][8]_i_1_n_0                              | sc/block_sub_y[3][9]_i_1_n_0                       |                6 |             20 |
-|  move_clk          | sc/bad_x[1][8]_i_1_n_0                              | sc/block_sub_y[1][9]_i_1_n_0                       |                6 |             20 |
+|  move_clk          | sc/bad_x[1][8]_i_1_n_0                              | sc/block_sub_y[0][9]_i_1_n_0                       |                6 |             20 |
 |  move_clk          | sc/bad_x[1][8]_i_1_n_0                              | sc/block_sub_y[2][9]_i_1_n_0                       |                6 |             20 |
 |  move_clk          | sc/bad_x[1][8]_i_1_n_0                              | sc/block_sub_y[4][9]_i_1_n_0                       |                6 |             20 |
-|  move_clk          | sc/bad_x[1][8]_i_1_n_0                              | sc/block_sub_y[0][9]_i_1_n_0                       |                6 |             20 |
-|  move_clk          | sc/bad_sub_y[1][9]_i_2_n_0                          | sc/bad_sub_y[3][9]_i_1_n_0                         |                6 |             20 |
-|  move_clk          | sc/bad_sub_y[1][9]_i_2_n_0                          | sc/bad_sub_y[1][9]_i_1_n_0                         |                6 |             20 |
-|  move_clk          | sc/bad_sub_y[1][9]_i_2_n_0                          | sc/bad_sub_y[2][9]_i_1_n_0                         |                6 |             20 |
+|  move_clk          | sc/bad_x[1][8]_i_1_n_0                              | sc/block_sub_y[1][9]_i_1_n_0                       |                6 |             20 |
 |  move_clk          | sc/bad_sub_y[1][9]_i_2_n_0                          | sc/bad_sub_y[0][9]_i_1_n_0                         |                6 |             20 |
+|  move_clk          | sc/bad_sub_y[1][9]_i_2_n_0                          | sc/bad_sub_y[2][9]_i_1_n_0                         |                6 |             20 |
+|  move_clk          | sc/bad_sub_y[1][9]_i_2_n_0                          | sc/bad_sub_y[3][9]_i_1_n_0                         |                6 |             20 |
 |  move_clk          | sc/bad_sub_y[1][9]_i_2_n_0                          | sc/bad_sub_y[4][9]_i_1_n_0                         |                6 |             20 |
+|  move_clk          | sc/bad_sub_y[1][9]_i_2_n_0                          | sc/bad_sub_y[1][9]_i_1_n_0                         |                6 |             20 |
 |  move_clk          | sc/bad_sub_y[1][9]_i_2_n_0                          | sc/bad_sub_y[5][9]_i_1_n_0                         |                6 |             20 |
-|  move_clk          | sc/bad_x[1][8]_i_1_n_0                              | sc/block_sub_y[5][9]_i_1_n_0                       |                6 |             20 |
-|  move_clk          | sc/bad_x[1][8]_i_1_n_0                              | sc/bad_x[1][9]_i_1_n_0                             |               26 |             26 |
+|  move_clk          | sc/bad_x[1][8]_i_1_n_0                              | sc/bad_x[1][9]_i_1_n_0                             |               24 |             26 |
 |  ClkPort_IBUF_BUFG | ee354_debouncer_up/debounce_count                   | ee354_debouncer_up/debounce_count[27]_i_1_n_0      |                7 |             27 |
 |  ClkPort_IBUF_BUFG | ee354_debouncer_down/debounce_count                 | ee354_debouncer_down/debounce_count[27]_i_1__0_n_0 |                7 |             27 |
 |  ClkPort_IBUF_BUFG | sc/random[3]_i_1_n_0                                | sc/timer_count[27]_i_1_n_0                         |                8 |             28 |
-|  ClkPort_IBUF_BUFG |                                                     | BtnC_IBUF                                          |               10 |             40 |
-|  move_clk          | sc/bad_x[1][8]_i_1_n_0                              |                                                    |               78 |             96 |
+|  ClkPort_IBUF_BUFG |                                                     | Ld6_OBUF                                           |               10 |             40 |
+|  move_clk          | sc/bad_x[1][8]_i_1_n_0                              |                                                    |               75 |             96 |
 +--------------------+-----------------------------------------------------+----------------------------------------------------+------------------+----------------+
 
 

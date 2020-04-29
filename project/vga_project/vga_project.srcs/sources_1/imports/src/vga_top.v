@@ -36,7 +36,9 @@ module vga_top(
 	output An0, An1, An2, An3, An4, An5, An6, An7,
 	output Ca, Cb, Cc, Cd, Ce, Cf, Cg, Dp,
 	
-	output MemOE, MemWR, RamCS, QuadSpiFlashC
+	output MemOE, MemWR, RamCS, QuadSpiFlashCS,
+	output Ld8, Ld7, Ld6, Ld5, Ld4, Ld3, Ld2, Ld1, Ld0
+	);
 	wire Reset, Start, Ack;
 	assign Reset = BtnC;
 	assign Start = BtnL;
@@ -88,9 +90,9 @@ module vga_top(
 	assign {MemOE, MemWR, RamCS, QuadSpiFlashCS} = 4'b1111;
 
 	// Output: LEDs
-	assign {Ld8} = {ten_secs};
-	assign {Ld7, Ld6, Ld5, Ld4, Ld3} = {Qi, Qp1, Qp2, Qp3, Done};
-	assign {Ld2, Ld1, Ld0} = {Start, Ack, Reset};
+	assign {Ld8, Ld7, Ld6} = {Start, Ack, Reset};
+	assign {Ld5} = {ten_secs};
+	assign {Ld4, Ld3, Ld2, Ld1, Ld0} = {Done, Qp3, Qp2, Qp1, Qi};
 
 	// SSDs
 	assign SSD7 = {1'b0, 1'b0, 1'b0, Done};
