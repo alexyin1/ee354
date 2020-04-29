@@ -35,10 +35,9 @@ module vga_top(
 	//SSG signal 
 	output An0, An1, An2, An3, An4, An5, An6, An7,
 	output Ca, Cb, Cc, Cd, Ce, Cf, Cg, Dp,
-    output Ld7, Ld6, Ld5, Ld4, Ld3, Ld2, Ld1, Ld0, // 8 LEDs
+    output Ld8, Ld7, Ld6, Ld5, Ld4, Ld3, Ld2, Ld1, Ld0, // 8 LEDs
 	
-	output MemOE, MemWR, RamCS, QuadSpiFlashCS,
-	output Ld8, Ld7, Ld6, Ld5, Ld4, Ld3, Ld2, Ld1, Ld0
+	output MemOE, MemWR, RamCS, QuadSpiFlashCS
 	);
 	wire Reset, Start, Ack;
 	assign Reset = BtnC;

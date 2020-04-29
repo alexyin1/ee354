@@ -1,7 +1,7 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-| Date         : Tue Apr 28 18:47:33 2020
+| Date         : Tue Apr 28 19:00:49 2020
 | Host         : DESKTOP-BBSH87J running 64-bit major release  (build 9200)
 | Command      : report_methodology -file vga_top_methodology_drc_routed.rpt -pb vga_top_methodology_drc_routed.pb -rpx vga_top_methodology_drc_routed.rpx
 | Design       : vga_top
@@ -2595,32 +2595,32 @@ Related violations: <none>
 
 TIMING-17#513 Critical Warning
 Non-clocked sequential cell  
-The clock pin sc/state_read_ten_secs_reg/C is not reached by a timing clock
+The clock pin sc/state_reg[0]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#514 Critical Warning
 Non-clocked sequential cell  
-The clock pin sc/state_reg[0]/C is not reached by a timing clock
+The clock pin sc/state_reg[1]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#515 Critical Warning
 Non-clocked sequential cell  
-The clock pin sc/state_reg[1]/C is not reached by a timing clock
+The clock pin sc/state_reg[2]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#516 Critical Warning
 Non-clocked sequential cell  
-The clock pin sc/state_reg[2]/C is not reached by a timing clock
+The clock pin sc/state_reg[3]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#517 Critical Warning
 Non-clocked sequential cell  
-The clock pin sc/state_reg[3]/C is not reached by a timing clock
+The clock pin sc/state_reg[4]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#518 Critical Warning
 Non-clocked sequential cell  
-The clock pin sc/state_reg[4]/C is not reached by a timing clock
+The clock pin sc/state_ten_sec_elapsed_reg/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-18#1 Warning
