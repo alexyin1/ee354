@@ -12,7 +12,7 @@ module block_controller
 	output reg [3:0] score_tens,
 	output reg [3:0] score_hundreds,
 	output Qi, Qp1, Qp2, Qp3, Done,
-	output reg ten_secs
+	output reg ten_secs_elapsed
    );
 	reg [1:0] direction;
 	reg [27:0]	DIV_CLK;
@@ -32,8 +32,8 @@ module block_controller
 	wire move_clk;
 	assign move_clk=DIV_CLK[19];
 
-	reg [27:0] timer_count;
-	reg [3:0] check_ten_secs;
+	reg [27:0] clk_count;
+	reg [3:0] sec_count;
 	
 	reg [9:0] bird_x, bird_y;
 	reg [9:0] block_x[5:0], block_y[5:0];
@@ -47,7 +47,7 @@ module block_controller
 	wire feedback;
 	assign feedback = random[0] ^ random[3];
 
-	reg direction_chosen, state_read_ten_secs;
+	reg direction_chosen, state_ten_sec_elapsed;
 	
 	localparam 
 	RED   = 12'b1111_0000_0000,
@@ -136,7 +136,7 @@ module block_controller
 			score_tens <= 4'bXXXX;
 			score_hundreds <= 4'bXXXX;
 			direction_chosen <= 1'bX;
-			state_read_ten_secs <= 1'bX;
+			state_ten_sec_elapsed <= 1'bX;
 			for (i = 0; i < 6; i = i + 1)
 			begin
 				block_x[i] <= 10'bXXXXXXXXXX;
@@ -166,7 +166,7 @@ module block_controller
 					score_hundreds <= 0;
 
 					direction_chosen <= 1'b0;
-					state_read_ten_secs <= 1'b0;
+					state_ten_sec_elapsed <= 1'b0;
 
 					for (i = 0; i < 6; i = i + 1)
 					begin
@@ -220,9 +220,9 @@ module block_controller
 		begin
 			full_clk_state <= FULL_CLK_INIT;
 			direction<=2'bXX;
-			ten_secs <= 1'bX;
-			timer_count <= 28'bXXXXXXXXXXXXXXXXXXXXXXXXXXXX;
-			check_ten_secs <= 4'bXXXX;
+			ten_secs_elapsed <= 1'bX;
+			clk_count <= 28'bXXXXXXXXXXXXXXXXXXXXXXXXXXXX;
+			sec_count <= 4'bXXXX;
 			random <= 4'bXXXX;
 		end
 		else 
@@ -235,9 +235,9 @@ module block_controller
 						full_clk_state <= OPERATIONS;
 
 					direction<=2'b00;
-					ten_secs <= 1'b0;
-					timer_count <= 0;
-					check_ten_secs <= 0;
+					ten_secs_elapsed <= 1'b0;
+					clk_count <= 0;
+					sec_count <= 0;
 					random <= 6;
 				end
 
@@ -256,21 +256,21 @@ module block_controller
 					
 					random <= {random[2:0], feedback};
 
-					timer_count <= timer_count + 1;
+					clk_count <= clk_count + 1;
 
-					if (timer_count[27])
+					if (clk_count[27])
 					begin
-						check_ten_secs <= check_ten_secs + 1;
-						timer_count <= 0;
-						if (check_ten_secs == 9)
+						sec_count <= sec_count + 1;
+						clk_count <= 0;
+						if (sec_count == 9)
 						begin
-							check_ten_secs <= 0;
-							ten_secs <= 1'b1;
+							sec_count <= 0;
+							ten_secs_elapsed <= 1'b1;
 						end 
 					end
 
-					if (state_read_ten_secs)
-						ten_secs <= 1'b0;
+					if (state_ten_sec_elapsed)
+						ten_secs_elapsed <= 1'b0;
 				end
 
 				FULL_CLK_DONE:
@@ -287,12 +287,12 @@ module block_controller
 		input [3:0] block_movement;
 		input [4:0] transition_state;
 		begin
-			state_read_ten_secs <= 1'b0;
+			state_ten_sec_elapsed <= 1'b0;
 			direction_chosen <= 1'b0;
 
-			if (ten_secs == 1'b1)
+			if (ten_secs_elapsed == 1'b1)
 			begin
-				state_read_ten_secs <= 1'b1;
+				state_ten_sec_elapsed <= 1'b1;
 				state <= transition_state;
 			end
 

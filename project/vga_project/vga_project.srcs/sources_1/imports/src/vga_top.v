@@ -35,6 +35,7 @@ module vga_top(
 	//SSG signal 
 	output An0, An1, An2, An3, An4, An5, An6, An7,
 	output Ca, Cb, Cc, Cd, Ce, Cf, Cg, Dp,
+    output Ld7, Ld6, Ld5, Ld4, Ld3, Ld2, Ld1, Ld0, // 8 LEDs
 	
 	output MemOE, MemWR, RamCS, QuadSpiFlashCS,
 	output Ld8, Ld7, Ld6, Ld5, Ld4, Ld3, Ld2, Ld1, Ld0
@@ -57,7 +58,7 @@ module vga_top(
 	wire [3:0] score_tens;
 	wire [3:0] score_hundreds;
 	
-	wire ten_secs;
+	wire ten_secs_elapsed;
 
 	wire [3:0] SSD0, SSD1, SSD2, SSD3, SSD4, SSD5, SSD6, SSD7;	
 	reg [7:0] SSD_CATHODES;
@@ -71,7 +72,8 @@ module vga_top(
 	ee354_debouncer #(.N_dc(28)) ee354_debouncer_down (.CLK(ClkPort), .RESET(Reset), .PB(BtnD), .CCEN(down));
 	display_controller dc(.clk(ClkPort), .hSync(hSync), .vSync(vSync), .bright(bright), .hCount(hc), .vCount(vc));
 	block_controller sc(.clk(ClkPort), .bright(bright), .rst(Reset), .up(up), .down(down),.Start(Start),.Ack(Ack),.hCount(hc), .vCount(vc), .rgb(rgb), .score_ones(score_ones),
-	.score_tens(score_tens), .score_hundreds(score_hundreds), .Qi(Qi), .Qp1(Qp1), .Qp2(Qp2), .Qp3(Qp3), .Done(Done), .ten_secs(ten_secs) );
+	.score_tens(score_tens), .score_hundreds(score_hundreds), .Qi(Qi), .Qp1(Qp1), .Qp2(Qp2), .Qp3(Qp3), .Done(Done), .ten_secs_elapsed(ten_secs_elapsed) 
+	);
 	assign board_clk = ClkPort;
 
 	always @ (posedge board_clk, posedge Reset)  
@@ -91,7 +93,7 @@ module vga_top(
 
 	// Output: LEDs
 	assign {Ld8, Ld7, Ld6} = {Start, Ack, Reset};
-	assign {Ld5} = {ten_secs};
+	assign {Ld5} = {ten_secs_elapsed};
 	assign {Ld4, Ld3, Ld2, Ld1, Ld0} = {Done, Qp3, Qp2, Qp1, Qi};
 
 	// SSDs
