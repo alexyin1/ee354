@@ -65,6 +65,7 @@ module vga_top(
 
 	wire [2:0] ssdscan_clk;
 	reg [26:0] DIV_CLK;
+	reg [3:0] 		state_num;
 	wire board_clk;
 
 	ee354_debouncer #(.N_dc(28)) ee354_debouncer_up (.CLK(ClkPort), .RESET(Reset), .PB(BtnU), .CCEN(up));
@@ -74,6 +75,31 @@ module vga_top(
 	.score_tens(score_tens), .score_hundreds(score_hundreds), .Qi(Qi), .Qp1(Qp1), .Qp2(Qp2), .Qp3(Qp3), .Done(Done), .ten_secs_elapsed(ten_secs_elapsed) 
 	);
 	assign board_clk = ClkPort;
+
+	`define Qi_NUM		4'b0000
+	`define Qp1_NUM		4'b0001
+	`define Qp2_NUM		4'b0010
+	`define Qp3_NUM		4'b0011
+	`define DONE_NUM	4'b0100
+
+	
+	always @ (Qi, Qp1, Qp2, Qp3, Done)
+	begin : ONE_HOT_TO_HEX
+		(* full_case, parallel_case *) // to avoid prioritization (Verilog 2001 standard)
+		case ( {Done, Qp3, Qp2, Qp1, Qi} )		
+			5'b00001:
+				state_num = `Qi_NUM;
+			5'b00010: 
+				state_num = `Qp1_NUM;
+			5'b00100: 
+				state_num = `Qp2_NUM;
+			5'b01000: 
+				state_num = `Qp3_NUM;
+			5'b10000: 
+				state_num = `DONE_NUM;
+		endcase
+	end
+
 
 	always @ (posedge board_clk, posedge Reset)  
 	begin : CLOCK_DIVIDER
@@ -96,11 +122,11 @@ module vga_top(
 	assign {Ld4, Ld3, Ld2, Ld1, Ld0} = {Done, Qp3, Qp2, Qp1, Qi};
 
 	// SSDs
-	assign SSD7 = {1'b0, 1'b0, 1'b0, Done};
-	assign SSD6 = {1'b0, 1'b0, 1'b0, Qp3};
-	assign SSD5 = {1'b0, 1'b0, 1'b0, Qp2};
-	assign SSD4 = {1'b0, 1'b0, 1'b0, Qp1};
-	assign SSD3 = {1'b0, 1'b0, 1'b0, Qi};
+	assign SSD7 = state_num;
+	// assign SSD6 = {1'b0, 1'b0, 1'b0, Qp3};
+	// assign SSD5 = {1'b0, 1'b0, 1'b0, Qp2};
+	// assign SSD4 = {1'b0, 1'b0, 1'b0, Qp1};
+	// assign SSD3 = {1'b0, 1'b0, 1'b0, Qi};
 	assign SSD2 = score_hundreds;
 	assign SSD1 = score_tens;
 	assign SSD0 = score_ones;
